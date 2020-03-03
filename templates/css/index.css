@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Work Sans', sans-serif;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin-bottom: 1rem;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.nav-container h2 {
+    color: rgb(44, 17, 105);
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: #2c1169;
+    border: 0.2rem solid #58D1F5;
+    padding: 0.3rem;
+    border-radius: 7px;
+}
+
+.container {
+    width: 90%;
+    margin: 10% auto;
+}
+
+.description {
+    margin-bottom: 2rem;
+}
+
+.text {
+    text-align: center;
+}
+
+.text img {
+    width: 45%;
+    color: #58D1F5;
+    margin-top: 3rem;
+}
+
+.text h1 {
+    color: #2c1169;
+}
+
+text p {
+    margin-bottom: 1rem;
+}
+
+.description a {
+    text-decoration: none;
+    color: #2c1169;
+    border: 0.2rem solid #2c1169;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.get-started {
+    margin-bottom: 1rem;
+}
+
+.login-form {
+    background-color: #ebebeb;
+    padding: 1rem;
+    margin: 0.8rem;
+    text-align: center;
+}
+
+.login-form h3 {
+    color: #2c1169;
+}
+
+form {
+    margin: 0 auto;
+}
+
+input {
+    margin: 0.5rem;
+    border: none;
+    padding: 0.5rem;
+    outline: none;
+}
+
+@media screen and (min-width: 770px) {
+    .login-form {
+        width: 35%;
+        margin: 0 auto;
+    }
+
+    form {
+        width: 75%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .nav {
+        margin-bottom: 0.5rem;
+    }
+    
+    .container {
+        margin-top: 4rem;
+        margin-bottom: 1.5rem;
+        width: 95%;
+    }
+
+    .description {
+        width: 75%;
+        margin: 1rem auto;
+    }
+
+    .description h1{
+        font-size: 2.5rem;
+    }
+
+    .description a {
+        padding: 0.3rem 0.5rem;
+    }
+
+    .text {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 0;
+    }
+
+    .text img {
+        width: 35%;
+    }
+
+    .text-login {
+        width: 55%;
+    }
+
+    .login-form {
+        width: 50%;
+    }
+
+    .nav-container a {
+        padding: 0.3rem 1.2rem;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .container, .nav-container {
+        width: 70%;;
+    }
+}
