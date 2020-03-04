@@ -28,7 +28,7 @@ nav {
     color: rgb(44, 17, 105);
 }
 
-.nav-container a {
+.button {
     text-decoration: none;
     color: #2c1169;
     border: 0.2rem solid #58D1F5;
@@ -96,6 +96,10 @@ input {
     border: none;
     padding: 0.5rem;
     outline: none;
+}
+
+#signin {
+    padding: 0.3rem 1.5rem;
 }
 
 @media screen and (min-width: 770px) {
