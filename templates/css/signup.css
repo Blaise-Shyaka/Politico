@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Work Sans', sans-serif;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin-bottom: 1rem;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.nav-container h2 {
+    color: rgb(44, 17, 105);
+}
+
+.button {
+    text-decoration: none;
+    color: #2c1169;
+    border: 0.2rem solid #58D1F5;
+    padding: 0.3rem;
+    border-radius: 7px;
+}
+
+.container {
+    width: 90%;
+    margin: 12% auto;
+}
+
+.description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.description img {
+    width: 30%;
+    color: #58D1F5;
+    margin-top: 3rem;
+}
+
+.description h4 {
+    width: 55%;
+    color: #2c1169;
+}
+
+input {
+    margin: 0.3rem;
+    border: none;
+    padding: 0.5rem;
+    outline: none;
+    border-radius: 3px;
+}
+
+.signup-form {
+    background-color: #ebebeb;
+    padding: 1rem;
+    margin: 0.8rem;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.signup-form h3 {
+    color: #2c1169;
+}
+
+@media screen and (min-width: 490px){
+    .container{
+        width: 80%;
+    }
+
+    .signup-form{
+        width: 70%;
+        margin: 1.5rem auto;
+    }
+
+    input {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    .container{
+        display: flex;
+        flex-direction: row;
+        margin: 3% auto;
+        padding: 1.5rem;
+    }
+
+    .description {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .description img {
+        width: 40%;
+        margin-top: 0.5rem;
+    }
+
+    .description h4 {
+        font-size: 2.5rem;
+    }
+
+    .signup-form {
+        width: 40%;
+    }
+
+    .nav-container a {
+        padding: 0.3rem 1.2rem;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .container, .nav-container {
+        width: 70%;;
+    }
+
+    .signup-form {
+        width: 30%;
+    }
+}
