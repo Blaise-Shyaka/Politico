@@ -140,6 +140,21 @@ nav {
     font-weight: 600;
 }
 
+.delete {
+    padding: 0.4rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid rgb(182, 5, 5);
+    font-size: 1rem;
+    border-radius: 7px;
+    font-weight: 600;
+    color: rgb(182, 5, 5);
+    outline: none;
+}
+
+:hover .delete{
+    cursor: pointer;
+}
+
 @media screen and (min-width: 500px){
 
     .burger-menu {
