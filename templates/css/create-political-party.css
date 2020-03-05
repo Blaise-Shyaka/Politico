@@ -73,8 +73,8 @@ nav {
     color: #F6F4FF;
     padding: 0.8rem;
     font-size: 1.2rem;
-    border-radius: 8px;
-    background-color: #6888FF;
+    border-radius: 5px;
+    border-bottom: 3px solid #6888FF;
 }
 
 .hide {
@@ -102,12 +102,6 @@ nav {
 .profile p {
     color: #ffffff;
     font-size: 1rem;
-}
-
-#profile-picture {
-    height: 4rem;
-    width: 4rem;
-    border-radius: 50%;
 }
 
 .form {
