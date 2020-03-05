@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Work Sans', sans-serif;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin-bottom: 1rem;
+    background-color: #ffffff;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.nav-container h2 {
+    color: #373759;
+}
+
+.container {
+    width: 90%;
+    margin: 20% auto;
+}
+
+.burger-menu {
+    position: fixed;
+    background-color: #ffffff;
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    margin-top: -6%;
+    z-index: 4;
+    width: 100%;
+    margin-left: -1.2rem;
+}
+
+.burger-menu img {
+    width: 10%;
+}
+
+.menu-items {
+    background-color: #373759;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    margin-top: 3rem;
+    position: fixed;
+}
+
+:hover .menu-items li{
+    cursor: pointer;
+}
+
+.menu-items li{
+    list-style: none;
+    width: 90%;
+    margin-left: -1rem;
+    margin-bottom: 0.8rem;
+    color: #F6F4FF;
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    background-color: #6888FF;
+}
+
+.hide {
+    display: none;
+}
+
+.display {
+    text-align: center;
+    padding-top: 4rem;
+}
+
+.heading {
+    margin-top: -10%;
+}
+
+.profile {
+    text-align: center;
+    padding: 1rem;
+}
+
+.profile p {
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+#profile-picture {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+}
+
+.party {
+    background-color: #ebebeb;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.party img {
+    width: 20%;
+}
+
+.subtitles, .value {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #373759;
+}
+
+.value {
+    font-weight: 100;
+}
+
+@media screen and (min-width: 500px){
+
+    .burger-menu {
+        margin-top: -12%;
+    }
+
+    .burger-menu img {
+        width: 8%;
+    }
+
+    .menu-items {
+        width: 55%;
+        margin-top: 4%;
+    }
+
+    .heading {
+        margin-top: -6rem;
+    }
+
+    .heading h3 {
+        font-size: 2rem;
+    }
+
+    .profile p {
+        font-size: 1.5rem;
+    }
+
+    .party {
+        width: 65%;
+        margin: 1rem auto;
+    }
+
+    .subtitles, .value {
+        font-size: 0.8rem;
+    }
+
+    .party img {
+        width: 15%;
+    }
+}
+
+@media screen and (min-width: 1024px){
+    .burger-menu {
+        display: none;
+    }
+
+    .menu {
+        position: fixed;
+        width: 35%;
+        margin-top: -1%;
+    }
+
+    .menu-items {
+        display: inline-block;
+        position: relative;
+    }
+
+    .display {
+        width: 75%;
+        margin-left: 20%;
+        margin-top: -15%;
+    }
+
+    .profile p {
+        font-size: 1rem;
+    }
+
+    .menu-items li {
+        font-size: 1rem;
+    }
+
+    .party {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 85%;
+    }
+
+    .party img {
+        width: 5%;
+    }
+
+    .subtitles, .value {
+        font-size: 1rem;
+    }
+
+    .party p {
+        font-size: 0.5rem;
+    }
+
+    .heading h3 {
+        font-size: 1.8rem;
+        color: #373759;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .nav-container {
+        width: 70%;
+    }
+
+    .container {
+        width: 75%;
+    }
+
+    .menu {
+        width: 25%;
+    }
+
+    .display {
+        margin-top: -20%;
+    }
+}
