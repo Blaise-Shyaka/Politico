@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politico | Edit political party</title>
+    <link rel="stylesheet" href="../css/create-political-office.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <h2>Politico</h2>
+            <div class="nav-menu">
+                <ul class="horizontal-menu">
+                    <li id="nav-view-parties">All parties</li>
+                    <li id="nav-create-party">Create party</li>
+                    <li id="nav-create-office">Create office</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="burger-menu">
+            <img src="../assets/open-menu.svg" alt="menu icon" id="burger">
+        </div>
+        <div class="menu">
+            <div class="menu-items">
+                <div class="profile">
+                    <p class="user-type">Admin</p>
+                    <hr>
+                </div>
+                <ul>
+                    <li id="view-parties">All political parties</li>
+                    <li id="create-party">Create political party</li>
+                    <li id="create-office">Create political office</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="display">
+            <div class="heading">
+                <h3>Create political office</h3>
+            </div>
+            <div class="form">
+                <form action="">
+                    <select name="office-type" id="">
+                        <option selected disabled>Choose office type</option>
+                        <option value="federal">Federal</option>
+                        <option value="legislative">Legislative</option>
+                        <option value="state">State</option>
+                        <option value="local">Local Government</option>
+                        <option value="federal">Federal</option>
+                    </select>
+                    <input type="text" name="office" placeholder="Office name">
+                     <br>
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../scripts/create-political-office.js"></script>
+</body>
+</html>
