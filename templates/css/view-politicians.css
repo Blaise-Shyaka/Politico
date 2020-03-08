@@ -39,6 +39,7 @@ nav {
 .container {
     width: 90%;
     margin: 20% auto;
+    margin-bottom: 1%;
 }
 
 .burger-menu {
@@ -173,7 +174,7 @@ nav {
 @media screen and (min-width: 1024px){
     .nav-menu {
         display: block;
-        width: 75%;
+        width: 60%;
     }
 
     .horizontal-menu {
