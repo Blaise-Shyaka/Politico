@@ -4,6 +4,9 @@ const viewParties = document.querySelector('#view-parties');
 const navViewParties = document.querySelector('#nav-view-parties');
 const viewCandidates = document.querySelector('#view-candidates');
 const navViewCandidates = document.querySelector('#nav-view-candidates');
+const history = document.querySelector('#history');
+const navHistory = document.querySelector('#nav-history');
+
 
 menuItems.classList.add('hide');
 
@@ -26,4 +29,12 @@ viewCandidates.addEventListener('click', () => {
 
 navViewCandidates.addEventListener('click', () => {
     window.location.href='../html/view-politicians.html';
+});
+
+history.addEventListener('click', () => {
+    window.location.href='../html/voting-history.html';
+});
+
+navHistory.addEventListener('click', () => {
+    window.location.href='../html/voting-history.html';
 });
