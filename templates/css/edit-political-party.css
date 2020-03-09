@@ -126,6 +126,16 @@ label {
     font-size: 0.7rem;
 }
 
+#submit {
+    border: 0.3rem solid #58D1F5;
+    border-radius: 7px;
+    padding: 0.7rem;
+}
+
+:hover #submit {
+    cursor: pointer;
+}
+
 @media screen and (min-width: 500px){
 
     .burger-menu {
@@ -169,7 +179,7 @@ label {
 
     .nav-menu {
         display: block;
-        width: 35%;
+        width: 60%;
     }
 
     .horizontal-menu {

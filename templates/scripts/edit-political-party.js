@@ -4,6 +4,8 @@ const viewParties = document.querySelector('#view-parties');
 const createParty = document.querySelector('#create-party');
 const navViewParties = document.querySelector('#nav-view-parties');
 const navCreateParty = document.querySelector('#nav-create-party');
+const createOffice = document.querySelector('#create-office');
+const navCreateOffice = document.querySelector('#nav-create-office');
 const partyName = document.querySelector('#party-name');
 const partyMotto = document.querySelector('#party-motto');
 const partyHeadquarter = document.querySelector('#party-headquarter');
@@ -28,6 +30,14 @@ navViewParties.addEventListener('click', () => {
 
 navCreateParty.addEventListener('click', () => {
     window.location.href='../html/create-political-party.html';
+});
+
+createOffice.addEventListener('click', () => {
+    window.location.href='../html/create-political-office.html';
+});
+
+navCreateOffice.addEventListener('click', () => {
+    window.location.href='../html/create-political-office.html';
 });
 
 partyName.value = 'Liberals 201';
