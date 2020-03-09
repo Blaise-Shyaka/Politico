@@ -96,20 +96,22 @@ input {
     border: none;
     padding: 0.5rem;
     outline: none;
+    width: 75%;
 }
 
 #signin {
     padding: 0.3rem 1.5rem;
+    width: 40%;
 }
 
-@media screen and (min-width: 770px) {
+@media screen and (min-width: 500px) {
     .login-form {
-        width: 35%;
+        width: 55%;
         margin: 0 auto;
     }
 
     form {
-        width: 75%;
+        width: 85%;
     }
 }
 
@@ -153,7 +155,7 @@ input {
     }
 
     .login-form {
-        width: 50%;
+        width: 85%;
     }
 
     .nav-container a {
@@ -163,6 +165,6 @@ input {
 
 @media screen and (min-width: 1440px) {
     .container, .nav-container {
-        width: 70%;;
+        width: 60%;;
     }
 }
