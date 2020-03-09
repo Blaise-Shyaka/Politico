@@ -39,6 +39,7 @@ nav {
 .container {
     width: 90%;
     margin: 20% auto;
+    margin-bottom: 1%;
 }
 
 .burger-menu {
@@ -199,7 +200,7 @@ nav {
 @media screen and (min-width: 1024px){
     .nav-menu {
         display: block;
-        width: 35%;
+        width: 60%;
     }
 
     .horizontal-menu {
@@ -220,7 +221,7 @@ nav {
     }
 
     .display {
-        width: 75%;
+        width: 85%;
         margin: 0 auto;
         margin-top: -13%;
     }
@@ -251,6 +252,8 @@ nav {
 
     .party p {
         font-size: 0.5rem;
+        width: 15%;
+        text-align: left;
     }
 
     .heading h3 {
