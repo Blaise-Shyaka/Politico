@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politico | File a petition</title>
+    <link rel="stylesheet" href="../css/file-petition.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <h2>Politico</h2>
+            <div class="nav-menu">
+                <ul class="horizontal-menu">
+                    <li id="nav-view-parties">All parties</li>
+                    <li id="nav-view-candidates">All candidates</li>
+                    <li id="nav-history">My voting history</li>
+                    <li id="nav-file-petition">File petition</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="burger-menu">
+            <img src="../assets/open-menu.svg" alt="menu icon" id="burger">
+        </div>
+        <div class="menu">
+            <div class="menu-items">
+                <div class="profile">
+                    <p class="user-type">Politician</p>
+                    <hr>
+                </div>
+                <ul>
+                    <li id="view-parties">All political parties</li>
+                    <li id="view-candidates">All candidates</li>
+                    <li id="history">My voting history</li>
+                    <li id="file-petition">File petition</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="display">
+            <div class="heading">
+                <h3>Become a candidate</h3>
+            </div>
+            <div class="form">
+                <form action="">
+                    <select name="office-type" id="">
+                        <option selected disabled>Choose office type</option>
+                        <option value="federal">Federal</option>
+                        <option value="legislative">Legislative</option>
+                        <option value="state">State</option>
+                        <option value="local">Local Government</option>
+                        <option value="federal">Federal</option>
+                    </select>
+                
+                    <select name="office-name" id="">
+                        <option selected disabled>Choose office name</option>
+                        <option value="governor">Governor</option>
+                        <option value="attorney general">Attorney General</option>
+                        <option value="head of electoral commission">Head of electoral commission</option>
+                        <option value="senator">Senator</option>
+                        <option value="city mayor">City Mayor</option>
+                    </select>
+                    <br>
+                    <br>
+                    <textarea name="reason" id="reason" cols="30" rows="10" placeholder="Why are you filing a petition?"></textarea>
+                     <br>
+                     <br>
+                     <label for="evidence" id="evidence-title">Provide evidence, if any:</label>
+                     <input type="file" class="files">
+                     <input type="file" class="files">
+                     <input type="file" class="files">
+                     <br>
+                     <br>
+                    <input type="submit" id="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../scripts/file-petition.js"></script>
+</body>
+</html>
