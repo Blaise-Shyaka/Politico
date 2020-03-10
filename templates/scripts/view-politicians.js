@@ -29,11 +29,11 @@ viewCandidates.addEventListener('click', () => {
 });
 
 history.addEventListener('click', () => {
-    window.location.href='../html/voting-histoy.html';
+    window.location.href='../html/voting-history.html';
 });
 
 navHistory.addEventListener('click', () => {
-    window.location.href='../html/voting history.html';
+    window.location.href='../html/voting-history.html';
 });
 
 navViewCandidates.addEventListener('click', () => {
