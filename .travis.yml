@@ -6,4 +6,4 @@ node_js:
 notifications:
   - email: false
 
-script: npm coverage
+script: set NODE_ENV=test&& npm run create-users-table && nyc mocha --require @babel/register ./server/tests/ --exit
