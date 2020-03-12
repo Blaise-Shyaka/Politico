@@ -24,19 +24,15 @@ describe('User creating an account', () => {
         confirm_password: 'danielpassword'
       })
       .end((err, res) => {
-        if (err) return done(err);
-
         res.body.should.be.a('object');
         res.body.should.include.keys(['status', 'data']);
         res.body.status.should.be.a('number');
         res.body.status.should.equal(codes.resourceCreated);
         res.body.data.should.be.a('object');
         res.body.data.should.include.keys([
-          'first_name',
-          'last_name',
+          'id',
           'email',
           'phone_number',
-          'password',
           'is_admin'
         ]);
       });
@@ -56,8 +52,6 @@ describe('User creating an account', () => {
         confirm_password: 'danielpassword'
       })
       .end((err, res) => {
-        if (err) return done(err);
-
         res.body.should.be.a('object');
         res.body.should.include.keys(['status', 'error']);
         res.body.status.should.be.a('number');
@@ -80,8 +74,6 @@ describe('User creating an account', () => {
         confirm_password: 'danielpassword'
       })
       .end((err, res) => {
-        if (err) return done(err);
-
         res.body.should.be.a('object');
         res.body.should.include.keys(['status', 'error']);
         res.body.status.should.be.a('number');

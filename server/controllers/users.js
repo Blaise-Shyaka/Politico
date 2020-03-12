@@ -27,10 +27,11 @@ const userSignUp = async (req, res) => {
   // Create user instance in the database
   const user = await createUser(value, hashedPassword);
   // eslint-disable-next-line camelcase
-  const { id, email, phone_number } = user.rows[0];
-  return res
-    .status(codes.resourceCreated)
-    .json({ status: res.statusCode, data: { id, email, phone_number } });
+  const { id, email, phone_number, is_admin } = user.rows[0];
+  return res.status(codes.resourceCreated).json({
+    status: res.statusCode,
+    data: { id, email, phone_number, is_admin }
+  });
 };
 
 export default userSignUp;
