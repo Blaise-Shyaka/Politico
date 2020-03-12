@@ -2,13 +2,28 @@ import Joi from '@hapi/joi';
 
 const validateUserSignup = data => {
   const schema = Joi.object({
-    first_name: Joi.string().required(),
-    last_name: Joi.string().required(),
+    first_name: Joi.string()
+      .trim()
+      .required(),
+    last_name: Joi.string()
+      .trim()
+      .required(),
     email: Joi.string()
+      .trim()
       .email()
       .required(),
-    phone_number: Joi.string().required(),
+    phone_number: Joi.string()
+      .trim()
+      .regex(/^[0][0-9]+$/)
+      .min(10)
+      .max(10)
+      .required()
+      .messages({
+        'string.pattern.base':
+          'Phone number should start with a 0, and it is only made up of digits between 0 and 9'
+      }),
     password: Joi.string()
+      .trim()
       .alphanum()
       .required(),
     confirm_password: Joi.ref('password')

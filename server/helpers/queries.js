@@ -16,10 +16,9 @@ const retrieveUser = async (columns, value) => {
 
 const createUser = async (data, hashedPassword) => {
   const client = await pool.connect();
-  await client.query(
+  const user = await client.query(
     `INSERT INTO users (first_name, last_name, email, phone_number, password, is_admin) 
-    VALUES($1, $2, $3, $4, $5, $6)
-    `,
+    VALUES($1,$2,$3,$4,$5,$6) RETURNING *`,
     [
       data.first_name,
       data.last_name,
@@ -29,10 +28,8 @@ const createUser = async (data, hashedPassword) => {
       false
     ]
   );
-  const user = await retrieveUser('*', data.email);
 
   client.release();
-
   return user;
 };
 
