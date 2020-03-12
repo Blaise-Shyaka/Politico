@@ -1,0 +1,9 @@
+language: node_js
+
+node_js:
+  - 12.14.1
+
+notifications:
+  - email: false
+
+script: set NODE_ENV=test&& npm run create-users-table && nyc mocha --require @babel/register ./server/tests/ --exit
