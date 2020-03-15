@@ -64,9 +64,10 @@ const userSignIn = async (req, res) => {
       .json({ status: res.statusCode, error: messages.wrongPassword });
 
   // Generate token
-  const token = await generateToken(user.rows[0]);
   // eslint-disable-next-line camelcase
   const { id, email, phone_number, is_admin } = user.rows[0];
+  const token = await generateToken({ id, email, is_admin });
+
   return res
     .header('Authorization', token)
     .status(codes.okay)
