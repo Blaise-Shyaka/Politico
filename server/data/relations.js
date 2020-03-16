@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import pool from './config';
 
 const usersTable = `
@@ -11,13 +12,16 @@ const usersTable = `
         is_admin BOOLEAN NOT NULL
     )`;
 
-const createUsersTable = async () => {
+exports.dropUsersTable = async () => {
   const client = await pool.connect();
   await client.query('DROP TABLE IF EXISTS users CASCADE');
-  await client.query(usersTable);
   client.release();
 };
 
-export default createUsersTable;
+exports.createUsersTable = async () => {
+  const client = await pool.connect();
+  await client.query(usersTable);
+  client.release();
+};
 
 require('make-runnable');

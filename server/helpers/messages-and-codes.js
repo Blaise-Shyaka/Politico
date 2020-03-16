@@ -8,7 +8,9 @@ const codes = {
 };
 
 const messages = {
-  userExists: 'You already have an account. Proceed with sign in instead'
+  userExists: 'You already have an account. Proceed with sign in instead',
+  userDoesNotExist: 'You do not have an account on Politico. Sign up instead',
+  wrongPassword: 'Either email or password is wrong.'
 };
 
 export { codes, messages };

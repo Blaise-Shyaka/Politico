@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "create-users-table": "babel-node ./server/data/relations default createUsersTable",
+    "drop-users-table": "babel-node ./server/data/relations dropUsersTable",
+    "create-users-table": "babel-node ./server/data/relations createUsersTable",
     "dev": "SET NODE_ENV=dev&& nodemon --exec babel-node ./server/app.js",
-    "test": "SET NODE_ENV=test&& npm run create-users-table && nyc mocha --require @babel/register ./server/tests/ --exit",
+    "test": "SET NODE_ENV=test&& npm run drop-users-table && npm run create-users-table&& nyc mocha --require @babel/register ./server/tests/ --exit",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./server -s",
@@ -37,7 +38,7 @@
     "core-js": "^2.6.11",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "make-runnable": "^1.3.6",
+    "jsonwebtoken": "^8.5.1",
     "mocha": "^7.1.0",
     "morgan": "^1.9.1",
     "pg": "^7.18.2"
@@ -55,6 +56,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "make-runnable": "^1.3.6",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1"

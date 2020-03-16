@@ -32,4 +32,20 @@ const validateUserSignup = data => {
   return schema.validate(data);
 };
 
-export default validateUserSignup;
+const validateUserSignIn = data => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .trim()
+      .email()
+      .required()
+      .messages({ 'string.base': 'The email should be comprised of letters' }),
+    password: Joi.string()
+      .trim()
+      .alphanum()
+      .required()
+  });
+
+  return schema.validate(data);
+};
+
+export { validateUserSignup, validateUserSignIn };
