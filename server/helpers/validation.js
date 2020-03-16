@@ -44,8 +44,20 @@ const validateUserSignIn = data => {
       .alphanum()
       .required()
   });
-
   return schema.validate(data);
 };
 
-export { validateUserSignup, validateUserSignIn };
+const validatePoliticalParty = data => {
+  const schema = Joi.object({
+    name: Joi.string()
+      .trim()
+      .required(),
+    hq_address: Joi.string()
+      .trim()
+      .required(),
+    logo_url: Joi.string().trim()
+  });
+  return schema.validate(data);
+};
+
+export { validateUserSignup, validateUserSignIn, validatePoliticalParty };

@@ -6,8 +6,11 @@
   "scripts": {
     "drop-users-table": "babel-node ./server/data/relations dropUsersTable",
     "create-users-table": "babel-node ./server/data/relations createUsersTable",
+    "drop-parties-table": "babel-node ./server/data/relation dropPartiesTable",
+    "create-parties-table": "npm run drop-parties-table && babel-node ./server/data/relations createPartiesTable",
+    "create-tables":"npm run create-users-table && npm run create-parties-table",
     "dev": "SET NODE_ENV=dev&& nodemon --exec babel-node ./server/app.js",
-    "test": "SET NODE_ENV=test&& npm run drop-users-table && npm run create-users-table&& nyc mocha --require @babel/register ./server/tests/ --exit",
+    "test": "SET NODE_ENV=test&& npm run create-tables && nyc mocha --require @babel/register ./server/tests/ --exit",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./server -s",
@@ -39,6 +42,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "make-runnable": "^1.3.6",
     "mocha": "^7.1.0",
     "morgan": "^1.9.1",
     "pg": "^7.18.2"

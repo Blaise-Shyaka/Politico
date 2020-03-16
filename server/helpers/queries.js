@@ -33,4 +33,25 @@ const createUser = async (data, hashedPassword) => {
   return user;
 };
 
-export { retrieveUser, createUser };
+const retrieveParty = async (columns, value) => {
+  const client = await pool.connect();
+  const data = await client.query(
+    `SELECT ${columns} FROM users WHERE email = $1`,
+    [value]
+  );
+  client.release();
+  return data.rows[0];
+};
+
+const createParty = async data => {
+  const client = await pool.connect();
+  const party = await client.query(
+    `INSERT INTO parties (name, hq_address, logo_url) VALUES($1, $2, $3) RETURNING *`,
+    [data.name, data.hq_address, data.logo_url]
+  );
+  client.release();
+
+  return party;
+};
+
+export { retrieveUser, createUser, retrieveParty, createParty };
