@@ -20,10 +20,10 @@ const createUser = async (data, hashedPassword) => {
     `INSERT INTO users (first_name, last_name, email, phone_number, password, is_admin) 
     VALUES($1,$2,$3,$4,$5,$6) RETURNING *`,
     [
-      data.first_name,
-      data.last_name,
+      data.firstName,
+      data.lastName,
       data.email,
-      data.phone_number,
+      data.phoneNumber,
       hashedPassword,
       false
     ]

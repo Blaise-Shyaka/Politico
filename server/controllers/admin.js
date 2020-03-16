@@ -18,9 +18,7 @@ const createPoliticalParty = async (req, res) => {
       .json({ status: res.statusCode, error: error.message });
 
   // Check if the party already exists
-
   const partyAlreadyExists = await retrieveParty('name', value.name);
-
   if (partyAlreadyExists)
     return res
       .status(codes.conflict)
