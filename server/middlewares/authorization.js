@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import { codes, messages } from '../helpers/messages-and-codes';
 
-exports.authoriseUser = async (req, res) => {
+const authoriseUser = async (req, res, next) => {
   const token = req.header('Authorization');
 
   if (!token)
@@ -13,4 +13,8 @@ exports.authoriseUser = async (req, res) => {
   const verifiedUser = await jwt.verify(token, process.env.secret_key);
 
   req.user = verifiedUser;
+
+  next();
 };
+
+export default authoriseUser;

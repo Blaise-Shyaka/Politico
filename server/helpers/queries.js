@@ -36,7 +36,7 @@ const createUser = async (data, hashedPassword) => {
 const retrieveParty = async (columns, value) => {
   const client = await pool.connect();
   const data = await client.query(
-    `SELECT ${columns} FROM users WHERE email = $1`,
+    `SELECT ${columns} FROM parties WHERE name = $1`,
     [value]
   );
   client.release();

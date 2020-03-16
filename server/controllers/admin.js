@@ -1,19 +1,17 @@
-/* eslint-disable camelcase */
 /* eslint-disable consistent-return */
 import { codes, messages } from '../helpers/messages-and-codes';
 import { validatePoliticalParty } from '../helpers/validation';
 import { createParty, retrieveParty } from '../helpers/queries';
 
-const createPoliticalParty = (req, res) => {
-  const { is_admin } = req.user;
-
-  if (!is_admin)
+const createPoliticalParty = async (req, res) => {
+  const { is_admin: isAdmin } = req.user;
+  if (!isAdmin)
     return res
       .status(codes.unauthorized)
       .json({ status: res.statusCode, error: messages.notAllowed });
 
   // validate party
-  const { error, value } = validatePoliticalParty(req.body);
+  const { error, value } = await validatePoliticalParty(req.body);
   if (error)
     return res
       .status(codes.badRequest)
@@ -21,14 +19,16 @@ const createPoliticalParty = (req, res) => {
 
   // Check if the party already exists
 
-  const partyAlreadyExists = retrieveParty('name', value.name);
+  const partyAlreadyExists = await retrieveParty('name', value.name);
+
   if (partyAlreadyExists)
     return res
       .status(codes.conflict)
       .json({ status: res.statusCode, error: messages.partyExists });
 
   // insert into the parties table
-  const party = createParty(value);
+
+  const party = await createParty(value);
   const { id, name } = party.rows[0];
 
   return res
