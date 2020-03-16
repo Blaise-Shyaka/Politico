@@ -47,7 +47,7 @@ const createParty = async data => {
   const client = await pool.connect();
   const party = await client.query(
     `INSERT INTO parties (name, hq_address, logo_url) VALUES($1, $2, $3) RETURNING *`,
-    [data.name, data.hq_address, data.logo_url]
+    [data.name, data.hqAddress, data.logoUrl]
   );
   client.release();
 

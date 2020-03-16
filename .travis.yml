@@ -6,4 +6,4 @@ node_js:
 notifications:
   - email: false
 
-script: set NODE_ENV=test&& npm run drop-users-table && npm run create-users-table&& nyc mocha --require @babel/register ./server/tests/ --exit
+script: set NODE_ENV=test&& npm run drop-tables && npm run create-tables&& nyc mocha --require @babel/register ./server/tests/ --exit

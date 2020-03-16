@@ -32,8 +32,8 @@ describe('User creating an account', () => {
         res.body.data.should.include.keys([
           'id',
           'email',
-          'phone_number',
-          'is_admin'
+          'phoneNumber',
+          'isAdmin'
         ]);
       });
     done();
@@ -106,8 +106,8 @@ describe('User sign in', () => {
         res.body.data.should.include.keys([
           'id',
           'email',
-          'phone_number',
-          'is_admin'
+          'phoneNumber',
+          'isAdmin'
         ]);
       });
     done();
@@ -131,8 +131,8 @@ describe('User sign in', () => {
           'token',
           'id',
           'email',
-          'phone_number',
-          'is_admin'
+          'phoneNumber',
+          'isAdmin'
         ]);
       });
     done();

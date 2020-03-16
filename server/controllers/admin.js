@@ -4,7 +4,7 @@ import { validatePoliticalParty } from '../helpers/validation';
 import { createParty, retrieveParty } from '../helpers/queries';
 
 const createPoliticalParty = async (req, res) => {
-  const { is_admin: isAdmin } = req.user;
+  const { isAdmin } = req.user;
   if (!isAdmin)
     return res
       .status(codes.unauthorized)
