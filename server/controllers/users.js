@@ -68,19 +68,16 @@ const userSignIn = async (req, res) => {
   const { id, email, phone_number, is_admin } = user.rows[0];
   const token = await generateToken({ id, email, is_admin });
 
-  return res
-    .header('Authorization', token)
-    .status(codes.okay)
-    .json({
-      status: res.statusCode,
-      data: {
-        token,
-        id,
-        email,
-        phone_number,
-        is_admin
-      }
-    });
+  return res.status(codes.okay).json({
+    status: res.statusCode,
+    data: {
+      token,
+      id,
+      email,
+      phone_number,
+      is_admin
+    }
+  });
 };
 
 export { userSignUp, userSignIn };
