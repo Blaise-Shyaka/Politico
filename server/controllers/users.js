@@ -28,11 +28,17 @@ const userSignUp = async (req, res) => {
 
   // Create user instance in the database
   const user = await createUser(value, hashedPassword);
-  // eslint-disable-next-line camelcase
-  const { id, email, phone_number, is_admin } = user.rows[0];
+
+  const {
+    id,
+    email,
+    phone_number: phoneNumber,
+    is_admin: isAdmin
+  } = user.rows[0];
+
   return res.status(codes.resourceCreated).json({
     status: res.statusCode,
-    data: { id, email, phone_number, is_admin }
+    data: { id, email, phoneNumber, isAdmin }
   });
 };
 
@@ -64,9 +70,13 @@ const userSignIn = async (req, res) => {
       .json({ status: res.statusCode, error: messages.wrongPassword });
 
   // Generate token
-  // eslint-disable-next-line camelcase
-  const { id, email, phone_number, is_admin } = user.rows[0];
-  const token = await generateToken({ id, email, is_admin });
+  const {
+    id,
+    email,
+    phone_number: phoneNumber,
+    is_admin: isAdmin
+  } = user.rows[0];
+  const token = await generateToken({ id, email, isAdmin });
 
   return res.status(codes.okay).json({
     status: res.statusCode,
@@ -74,8 +84,8 @@ const userSignIn = async (req, res) => {
       token,
       id,
       email,
-      phone_number,
-      is_admin
+      phoneNumber,
+      isAdmin
     }
   });
 };
