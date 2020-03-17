@@ -54,4 +54,21 @@ const createParty = async data => {
   return party;
 };
 
-export { retrieveUser, createUser, retrieveParty, createParty };
+const retrieveSpecificParty = async data => {
+  const client = await pool.connect();
+  const party = await client.query(
+    'SELECT id, name, logo_url FROM parties WHERE id = $1',
+    [data]
+  );
+  client.release();
+
+  return party.rows[0];
+};
+
+export {
+  retrieveUser,
+  createUser,
+  retrieveParty,
+  createParty,
+  retrieveSpecificParty
+};

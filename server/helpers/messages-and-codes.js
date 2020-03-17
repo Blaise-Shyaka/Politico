@@ -13,7 +13,10 @@ const messages = {
   wrongPassword: 'Either email or password is wrong.',
   noToken: 'Invalid or no token was provided',
   notAllowed: 'Unauthorized to access this route.',
-  partyExists: 'A party registered under that name already exists'
+  partyExists: 'A party registered under that name already exists',
+  partyNotFound: 'The political party you are trying to access does not exist',
+  wrongParameterFormat:
+    'The parameter is in wrong format. It should be a number'
 };
 
 export { codes, messages };
