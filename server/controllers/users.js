@@ -43,51 +43,55 @@ const userSignUp = async (req, res) => {
 };
 
 const userSignIn = async (req, res) => {
-  // Validate user input
-  const { error, value } = await validateUserSignIn(req.body);
+  try {
+    // Validate user input
+    const { error, value } = await validateUserSignIn(req.body);
 
-  if (error)
-    return res
-      .status(codes.badRequest)
-      .json({ status: res.statusCode, error: error.message });
+    if (error)
+      return res
+        .status(codes.badRequest)
+        .json({ status: res.statusCode, error: error.message });
 
-  // Check if the user exists
-  const user = await retrieveUser('*', value.email);
+    // Check if the user exists
+    const user = await retrieveUser('*', value.email);
 
-  if (user.rows.length === 0)
-    return res
-      .status(codes.unauthorized)
-      .json({ status: res.statusCode, error: messages.userDoesNotExist });
+    if (user.rows.length === 0)
+      return res
+        .status(codes.unauthorized)
+        .json({ status: res.statusCode, error: messages.userDoesNotExist });
 
-  // Check if the password is correct
-  const { password } = user.rows[0];
+    // Check if the password is correct
+    const { password } = user.rows[0];
 
-  const isPasswordCorrect = await bcrypt.compare(value.password, password);
+    const isPasswordCorrect = await bcrypt.compare(value.password, password);
 
-  if (!isPasswordCorrect)
-    return res
-      .status(codes.unauthorized)
-      .json({ status: res.statusCode, error: messages.wrongPassword });
+    if (!isPasswordCorrect)
+      return res
+        .status(codes.unauthorized)
+        .json({ status: res.statusCode, error: messages.wrongPassword });
 
-  // Generate token
-  const {
-    id,
-    email,
-    phone_number: phoneNumber,
-    is_admin: isAdmin
-  } = user.rows[0];
-  const token = await generateToken({ id, email, isAdmin });
-
-  return res.status(codes.okay).json({
-    status: res.statusCode,
-    data: {
-      token,
+    // Generate token
+    const {
       id,
       email,
-      phoneNumber,
-      isAdmin
-    }
-  });
+      phone_number: phoneNumber,
+      is_admin: isAdmin
+    } = user.rows[0];
+    const token = await generateToken({ id, email, isAdmin });
+
+    return res.status(codes.okay).json({
+      status: res.statusCode,
+      data: {
+        token,
+        id,
+        email,
+        phoneNumber,
+        isAdmin
+      }
+    });
+  } catch (e) {
+    return e.stack;
+  }
 };
 
 export { userSignUp, userSignIn };

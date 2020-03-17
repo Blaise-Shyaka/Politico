@@ -2,17 +2,17 @@ import Joi from '@hapi/joi';
 
 const validateUserSignup = data => {
   const schema = Joi.object({
-    first_name: Joi.string()
+    firstName: Joi.string()
       .trim()
       .required(),
-    last_name: Joi.string()
+    lastName: Joi.string()
       .trim()
       .required(),
     email: Joi.string()
       .trim()
       .email()
       .required(),
-    phone_number: Joi.string()
+    phoneNumber: Joi.string()
       .trim()
       .regex(/^[0][0-9]+$/)
       .min(10)
@@ -26,7 +26,7 @@ const validateUserSignup = data => {
       .trim()
       .alphanum()
       .required(),
-    confirm_password: Joi.ref('password')
+    confirmPassword: Joi.ref('password')
   });
 
   return schema.validate(data);
@@ -44,8 +44,20 @@ const validateUserSignIn = data => {
       .alphanum()
       .required()
   });
-
   return schema.validate(data);
 };
 
-export { validateUserSignup, validateUserSignIn };
+const validatePoliticalParty = data => {
+  const schema = Joi.object({
+    name: Joi.string()
+      .trim()
+      .required(),
+    hqAddress: Joi.string()
+      .trim()
+      .required(),
+    logoUrl: Joi.string().trim()
+  });
+  return schema.validate(data);
+};
+
+export { validateUserSignup, validateUserSignIn, validatePoliticalParty };
