@@ -70,9 +70,32 @@ const validateOfficeId = data => {
   return schema.validate(data);
 };
 
+const validatePoliticalOffice = data => {
+  const schema = Joi.object({
+    type: Joi.string()
+      .trim()
+      .required(),
+    name: Joi.string()
+      .trim()
+      .required()
+  });
+
+  return schema.validate(data);
+};
+
+const validateSpecificPartyId = data => {
+  const schema = Joi.object({
+    partyId: Joi.string().regex(/^[0-9]+$/)
+  });
+
+  return schema.validate(data);
+};
+
 export {
   validateUserSignup,
   validateUserSignIn,
   validatePoliticalParty,
-  validateOfficeId
+  validateOfficeId,
+  validatePoliticalOffice,
+  validateSpecificPartyId
 };

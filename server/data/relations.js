@@ -44,8 +44,8 @@ const createTablesQuery = `
   
       INSERT INTO offices (type, name) 
       VALUES(
-        'testType', 
-        'testName'
+        'testOfficeType', 
+        'testOfficeName'
         );
   `;
 

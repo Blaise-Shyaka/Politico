@@ -54,6 +54,33 @@ const createParty = async data => {
   return party;
 };
 
+const retrievePartyById = async (columns, value) => {
+  const client = await pool.connect();
+  const data = await client.query(
+    `SELECT ${columns} FROM parties WHERE id = $1`,
+    [value]
+  );
+  client.release();
+  return data.rows[0];
+};
+
+const deleteParty = async id => {
+  const client = await pool.connect();
+  await client.query(`DELETE FROM parties WHERE id = $1`, [id]);
+  await client.release();
+};
+
+const retrieveSpecificParty = async data => {
+  const client = await pool.connect();
+  const party = await client.query(
+    'SELECT id, name, logo_url FROM parties WHERE id = $1',
+    [data]
+  );
+  client.release();
+
+  return party.rows[0];
+};
+
 const retrieveAllParties = async () => {
   const client = await pool.connect();
   const parties = await client.query(`SELECT id, name, logo_url FROM parties`);
@@ -71,12 +98,35 @@ const retrieveSpecificOffice = async id => {
 
   return office.rows[0];
 };
+const retrieveAllOffices = async () => {
+  const client = await pool.connect();
+  const offices = await client.query(`SELECT * FROM offices`);
+  client.release();
+
+  return offices.rows;
+};
+
+const createOffice = async data => {
+  const client = await pool.connect();
+  const office = await client.query(
+    'INSERT INTO offices(type, name) VALUES($1, $2) RETURNING *',
+    [data.type, data.name]
+  );
+  client.release();
+
+  return office.rows[0];
+};
 
 export {
   retrieveUser,
   createUser,
   retrieveParty,
   createParty,
-  retrieveAllParties,
-  retrieveSpecificOffice
+  retrieveSpecificOffice,
+  retrieveAllOffices,
+  createOffice,
+  retrievePartyById,
+  deleteParty,
+  retrieveSpecificParty,
+  retrieveAllParties
 };
