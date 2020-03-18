@@ -106,7 +106,7 @@ describe('Create political party', () => {
   });
 });
 
-describe('Deleting a political party', () => {
+describe('Create a political office', () => {
   const adminToken = generateToken({
     id: 1,
     email: 'steveng@gmail.com',
@@ -123,6 +123,97 @@ describe('Deleting a political party', () => {
 
   beforeEach(done => setTimeout(done, 500));
 
+  it('should return status 201 if a political office is created successfully', done => {
+    chai
+      .request(app)
+      .post('/api/offices')
+      .set('Authorization', adminToken)
+      .send({
+        type: 'Federal',
+        name: 'Attorney General'
+      })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.resourceCreated);
+        res.body.data.should.be.a('object');
+        res.body.data.should.include.keys(['id', 'type', 'name']);
+      });
+    done();
+  });
+
+  it('should return status 401 if the user trying to access this route is not an admin', done => {
+    chai
+      .request(app)
+      .post('/api/offices')
+      .set('Authorization', notAnAdminToken)
+      .send({
+        type: 'Federal',
+        name: 'Attorney General'
+      })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.unauthorized);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.notAllowed);
+      });
+    done();
+  });
+
+  it('should return status 400 on wrong input', done => {
+    chai
+      .request(app)
+      .post('/api/offices')
+      .set('Authorization', adminToken)
+      .send({
+        type: 'Federal'
+      })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+      });
+    done();
+  });
+
+  it('should return status 400 if the type of office is neither federal, legislative, state nor local government', done => {
+    chai
+      .request(app)
+      .post('/api/offices')
+      .set('Authorization', adminToken)
+      .send({
+        type: 'Anything',
+        name: 'Secretary general'
+      })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.notATypeOfOffice);
+      });
+    done();
+  });
+});
+
+describe('Deleting a political party', () => {
+  const adminToken = generateToken({
+    id: 1,
+    email: 'steveng@gmail.com',
+    phoneNumber: '0789553666',
+    isAdmin: true
+  });
+
+  const notAnAdminToken = generateToken({
+    id: 2,
+    email: 'notAdmin@gmail.com',
+    phoneNumber: '0789553666',
+    isAdmin: false
+  });
+
+  beforeEach(done => setTimeout(done, 500));
   it('should return status 200, if a party was deleted successfully', done => {
     chai
       .request(app)
