@@ -35,12 +35,26 @@ const createTablesQuery = `
       'testAddress', 
       'testUrl'
       );
+
+      CREATE TABLE IF NOT EXISTS offices (
+        id SERIAL PRIMARY KEY,
+        type VARCHAR NOT NULL,
+        name VARCHAR NOT NULL
+      );
+  
+      INSERT INTO offices (type, name) 
+      VALUES(
+        'testOfficeType', 
+        'testOfficeName'
+        );
   `;
 
 const dropTablesQuery = `
       DROP TABLE IF EXISTS users CASCADE;
 
       DROP TABLE IF EXISTS parties CASCADE;
+
+      DROP TABLE IF EXISTS offices CASCADE;
 `;
 
 const createTables = async () => {

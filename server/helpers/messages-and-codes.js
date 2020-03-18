@@ -15,7 +15,13 @@ const messages = {
   notAllowed: 'Unauthorized to access this route.',
   partyExists: 'A party registered under that name already exists',
   noPartiesFound: 'There are no parties recorded yet!',
-  noOfficesFound: 'There are no offices recorded yet!'
+  noOfficesFound: 'There are no offices recorded yet!',
+  notATypeOfOffice:
+    'Wrong type of office. A type of office should be either federal, legislative, state or local government',
+  successfullyDeleted: 'The party was successfully deleted',
+  partyNotFound: 'The political party you are trying to access does not exist',
+  wrongParameterFormat:
+    'The parameter is in wrong format. It should be a number'
 };
 
 export { codes, messages };

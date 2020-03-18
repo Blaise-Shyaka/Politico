@@ -1,12 +1,17 @@
 import bcrypt from 'bcrypt';
 import generateToken from '../helpers/generate-token';
-import { validateUserSignup, validateUserSignIn } from '../helpers/validation';
+import {
+  validateUserSignup,
+  validateUserSignIn,
+  validateSpecificPartyId
+} from '../helpers/validation';
 import { codes, messages } from '../helpers/messages-and-codes';
 import {
   retrieveUser,
   createUser,
   retrieveAllParties,
-  retrieveAllOffices
+  retrieveAllOffices,
+  retrieveSpecificParty
 } from '../helpers/queries';
 
 const userSignUp = async (req, res) => {
@@ -99,6 +104,36 @@ const userSignIn = async (req, res) => {
   }
 };
 
+const viewSpecificParty = async (req, res) => {
+  // Validate the parameter object
+  const { error, value } = validateSpecificPartyId(req.params);
+  if (error)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: messages.wrongParameterFormat });
+
+  // Check if it does not exist and send an error
+  const partyId = parseInt(value.partyId, 10);
+  const party = await retrieveSpecificParty(partyId);
+
+  if (!party)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.partyNotFound });
+
+  // Display the response
+  const { id, name, logo_url: logoUrl } = party;
+
+  return res.status(codes.okay).json({
+    status: res.statusCode,
+    data: {
+      id,
+      name,
+      logoUrl
+    }
+  });
+};
+
 const viewAllParties = async (req, res) => {
   // Query all parties
   const parties = await retrieveAllParties();
@@ -127,4 +162,10 @@ const viewAllOffices = async (req, res) => {
   return res.status(codes.okay).json({ status: res.statusCode, data: offices });
 };
 
-export { userSignUp, userSignIn, viewAllParties, viewAllOffices };
+export {
+  userSignUp,
+  userSignIn,
+  viewAllParties,
+  viewSpecificParty,
+  viewAllOffices
+};
