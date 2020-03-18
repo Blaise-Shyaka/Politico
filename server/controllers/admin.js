@@ -1,7 +1,10 @@
 /* eslint-disable consistent-return */
 import { codes, messages } from '../helpers/messages-and-codes';
-import { validatePoliticalParty } from '../helpers/validation';
-import { createParty, retrieveParty } from '../helpers/queries';
+import {
+  validatePoliticalParty,
+  validatePoliticalOffice
+} from '../helpers/validation';
+import { createParty, retrieveParty, createOffice } from '../helpers/queries';
 
 const createPoliticalParty = async (req, res) => {
   const { isAdmin } = req.user;
@@ -34,4 +37,36 @@ const createPoliticalParty = async (req, res) => {
     .json({ status: res.statusCode, data: { id, name } });
 };
 
-export default createPoliticalParty;
+const createPoliticalOffice = async (req, res) => {
+  // Check if the user accessing this route is an admin
+  const { isAdmin } = req.user;
+  if (!isAdmin)
+    return res
+      .status(codes.unauthorized)
+      .json({ status: res.statusCode, error: messages.notAllowed });
+
+  // Validate the input
+  const { error, value } = await validatePoliticalOffice(req.body);
+  if (error)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: error.message });
+
+  // Check if it the office type falls into pre-specified categories
+  const officeTypes = ['federal', 'legislative', 'state', 'local government'];
+  const typeOfOfficeSubmitted = value.type;
+  const isIncluded = officeTypes.includes(typeOfOfficeSubmitted.toLowerCase());
+  if (!isIncluded)
+    return res.status(codes.badRequest).json({
+      status: res.statusCode,
+      error: messages.notATypeOfOffice
+    });
+
+  // Insert into the database and send response
+  const office = await createOffice(value);
+  return res
+    .status(codes.resourceCreated)
+    .json({ status: res.statusCode, data: office });
+};
+
+export { createPoliticalParty, createPoliticalOffice };

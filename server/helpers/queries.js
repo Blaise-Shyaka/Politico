@@ -62,10 +62,22 @@ const retrieveAllParties = async () => {
   return parties.rows;
 };
 
+const createOffice = async data => {
+  const client = await pool.connect();
+  const office = await client.query(
+    'INSERT INTO offices(type, name) VALUES($1, $2) RETURNING *',
+    [data.type, data.name]
+  );
+  client.release();
+
+  return office.rows[0];
+};
+
 export {
   retrieveUser,
   createUser,
   retrieveParty,
   createParty,
-  retrieveAllParties
+  retrieveAllParties,
+  createOffice
 };

@@ -14,7 +14,9 @@ const messages = {
   noToken: 'Invalid or no token was provided',
   notAllowed: 'Unauthorized to access this route.',
   partyExists: 'A party registered under that name already exists',
-  noPartiesFound: 'There are no parties recorded yet!'
+  noPartiesFound: 'There are no parties recorded yet!',
+  notATypeOfOffice:
+    'Wrong type of office. A type of office should be either federal, legislative, state or local government'
 };
 
 export { codes, messages };
