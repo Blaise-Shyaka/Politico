@@ -89,6 +89,15 @@ const retrieveAllParties = async () => {
   return parties.rows;
 };
 
+const retrieveSpecificOffice = async id => {
+  const client = await pool.connect();
+  const office = await client.query('SELECT * FROM offices WHERE id = $1', [
+    id
+  ]);
+  await client.release();
+
+  return office.rows[0];
+};
 const retrieveAllOffices = async () => {
   const client = await pool.connect();
   const offices = await client.query(`SELECT * FROM offices`);
@@ -113,6 +122,7 @@ export {
   createUser,
   retrieveParty,
   createParty,
+  retrieveSpecificOffice,
   retrieveAllOffices,
   createOffice,
   retrievePartyById,

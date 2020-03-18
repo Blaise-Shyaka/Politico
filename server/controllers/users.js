@@ -3,6 +3,7 @@ import generateToken from '../helpers/generate-token';
 import {
   validateUserSignup,
   validateUserSignIn,
+  validateOfficeId,
   validateSpecificPartyId
 } from '../helpers/validation';
 import { codes, messages } from '../helpers/messages-and-codes';
@@ -10,6 +11,7 @@ import {
   retrieveUser,
   createUser,
   retrieveAllParties,
+  retrieveSpecificOffice,
   retrieveAllOffices,
   retrieveSpecificParty
 } from '../helpers/queries';
@@ -148,11 +150,32 @@ const viewAllParties = async (req, res) => {
   return res.status(codes.okay).json({ status: res.statusCode, data: parties });
 };
 
+const viewSpecificOffice = async (req, res) => {
+  // Validate officeId
+  const { error, value } = await validateOfficeId(req.params);
+  if (error)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: messages.wrongParameterFormat });
+
+  // Check if that id exists in the database
+  const officeId = parseInt(value.officeId, 10);
+  const office = await retrieveSpecificOffice(officeId);
+
+  if (!office)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.officeNotFound });
+
+  // Send a response
+  return res.status(codes.okay).json({ status: res.statusCode, data: office });
+};
+
 const viewAllOffices = async (req, res) => {
   // Retrieve all offices
   const offices = await retrieveAllOffices();
 
-  // Check if there are no parties
+  // Check if there are no offices
   if (offices.length === 0)
     return res
       .status(codes.notFound)
@@ -166,6 +189,7 @@ export {
   userSignUp,
   userSignIn,
   viewAllParties,
+  viewSpecificOffice,
   viewSpecificParty,
   viewAllOffices
 };

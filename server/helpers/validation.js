@@ -60,6 +60,16 @@ const validatePoliticalParty = data => {
   return schema.validate(data);
 };
 
+const validateOfficeId = data => {
+  const schema = Joi.object({
+    officeId: Joi.string()
+      .trim()
+      .regex(/^[0-9]+$/)
+  });
+
+  return schema.validate(data);
+};
+
 const validatePoliticalOffice = data => {
   const schema = Joi.object({
     type: Joi.string()
@@ -85,6 +95,7 @@ export {
   validateUserSignup,
   validateUserSignIn,
   validatePoliticalParty,
+  validateOfficeId,
   validatePoliticalOffice,
   validateSpecificPartyId
 };

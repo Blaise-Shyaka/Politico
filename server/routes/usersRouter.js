@@ -3,6 +3,7 @@ import {
   userSignUp,
   userSignIn,
   viewAllParties,
+  viewSpecificOffice,
   viewAllOffices,
   viewSpecificParty
 } from '../controllers/users';
@@ -15,6 +16,7 @@ userRouter.post('/auth/signup', userSignUp);
 userRouter.post('/auth/signin', userSignIn);
 userRouter.get('/parties/:partyId', authoriseUser, viewSpecificParty);
 userRouter.get('/parties', authoriseUser, viewAllParties);
+userRouter.get('/offices/:officeId', authoriseUser, viewSpecificOffice);
 userRouter.get('/offices', authoriseUser, viewAllOffices);
 
 export default userRouter;

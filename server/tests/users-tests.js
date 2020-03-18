@@ -192,6 +192,80 @@ describe('View all political parties', () => {
   });
 });
 
+describe('View a specific office', () => {
+  const userData = {
+    id: 1,
+    email: 'user@gmail.com',
+    phoneNumber: '0775677899',
+    isAdmin: false
+  };
+
+  const userToken = generateToken(userData);
+
+  beforeEach(done => setTimeout(done, 500));
+  it('should return status 200 and an object with office details', done => {
+    chai
+      .request(app)
+      .get('/api/offices/1')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'data']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.okay);
+        res.body.data.should.be.a('object');
+        res.body.data.should.include.keys(['id', 'type', 'name']);
+      });
+    done();
+  });
+
+  it('should return status 400 if officeId is not a number', done => {
+    chai
+      .request(app)
+      .get('/api/offices/1dfds')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.wrongParameterFormat);
+      });
+    done();
+  });
+
+  it('should return status 404 if the office a user is trying to access does not exist', done => {
+    chai
+      .request(app)
+      .get('/api/offices/1000')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.officeNotFound);
+      });
+    done();
+  });
+  it('should return status 401 if no token is provided', done => {
+    chai
+      .request(app)
+      .get('/api/offices/1')
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.unauthorized);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.noToken);
+      });
+    done();
+  });
+});
+
 describe('View all political offices', () => {
   const userData = {
     id: 1,
