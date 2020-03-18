@@ -13,7 +13,9 @@ const messages = {
   wrongPassword: 'Either email or password is wrong.',
   noToken: 'Invalid or no token was provided',
   notAllowed: 'Unauthorized to access this route.',
-  partyExists: 'A party registered under that name already exists'
+  partyExists: 'A party registered under that name already exists',
+  partyNotFound: 'The party you are trying to access was not found',
+  successfullyDeleted: 'The party was successfully deleted'
 };
 
 export { codes, messages };
