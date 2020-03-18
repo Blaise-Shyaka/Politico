@@ -16,7 +16,8 @@ const messages = {
   partyExists: 'A party registered under that name already exists',
   partyNotFound: 'The political party you are trying to access does not exist',
   wrongParameterFormat:
-    'The parameter is in wrong format. It should be a number'
+    'The parameter is in wrong format. It should be a number',
+  noPartiesFound: 'There are no parties recorded yet!'
 };
 
 export { codes, messages };

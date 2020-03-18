@@ -9,7 +9,8 @@ import { codes, messages } from '../helpers/messages-and-codes';
 import {
   retrieveUser,
   createUser,
-  retrieveSpecificParty
+  retrieveSpecificParty,
+  retrieveAllParties
 } from '../helpers/queries';
 
 const userSignUp = async (req, res) => {
@@ -132,4 +133,18 @@ const viewSpecificParty = async (req, res) => {
   });
 };
 
-export { userSignUp, userSignIn, viewSpecificParty };
+const viewAllParties = async (req, res) => {
+  // Query all parties
+  const parties = await retrieveAllParties();
+
+  // Check if there are no parties
+  if (parties.length === 0)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.noPartiesFound });
+
+  // Send response
+  return res.status(codes.okay).json({ status: res.statusCode, data: parties });
+};
+
+export { userSignUp, userSignIn, viewSpecificParty, viewAllParties };
