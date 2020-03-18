@@ -1,11 +1,16 @@
 import bcrypt from 'bcrypt';
 import generateToken from '../helpers/generate-token';
-import { validateUserSignup, validateUserSignIn } from '../helpers/validation';
+import {
+  validateUserSignup,
+  validateUserSignIn,
+  validateOfficeId
+} from '../helpers/validation';
 import { codes, messages } from '../helpers/messages-and-codes';
 import {
   retrieveUser,
   createUser,
-  retrieveAllParties
+  retrieveAllParties,
+  retrieveSpecificOffice
 } from '../helpers/queries';
 
 const userSignUp = async (req, res) => {
@@ -112,4 +117,25 @@ const viewAllParties = async (req, res) => {
   return res.status(codes.okay).json({ status: res.statusCode, data: parties });
 };
 
-export { userSignUp, userSignIn, viewAllParties };
+const viewSpecificOffice = async (req, res) => {
+  // Validate officeId
+  const { error, value } = await validateOfficeId(req.params);
+  if (error)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: messages.wrongParameterFormat });
+
+  // Check if that id exists in the database
+  const officeId = parseInt(value.officeId, 10);
+  const office = await retrieveSpecificOffice(officeId);
+
+  if (!office)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.officeNotFound });
+
+  // Send a response
+  return res.status(codes.okay).json({ status: res.statusCode, data: office });
+};
+
+export { userSignUp, userSignIn, viewAllParties, viewSpecificOffice };

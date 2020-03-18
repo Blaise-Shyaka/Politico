@@ -14,7 +14,9 @@ const messages = {
   noToken: 'Invalid or no token was provided',
   notAllowed: 'Unauthorized to access this route.',
   partyExists: 'A party registered under that name already exists',
-  noPartiesFound: 'There are no parties recorded yet!'
+  noPartiesFound: 'There are no parties recorded yet!',
+  wrongParameterFormat: 'The officeId should be a number',
+  officeNotFound: 'The office you are trying to access was not found'
 };
 
 export { codes, messages };
