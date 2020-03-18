@@ -14,7 +14,8 @@ const messages = {
   noToken: 'Invalid or no token was provided',
   notAllowed: 'Unauthorized to access this route.',
   partyExists: 'A party registered under that name already exists',
-  noPartiesFound: 'There are no parties recorded yet!'
+  noPartiesFound: 'There are no parties recorded yet!',
+  noOfficesFound: 'There are no offices recorded yet!'
 };
 
 export { codes, messages };
