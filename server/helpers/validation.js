@@ -69,6 +69,15 @@ const validatePoliticalOffice = data => {
       .trim()
       .required()
   });
+
+  return schema.validate(data);
+};
+
+const validateSpecificPartyId = data => {
+  const schema = Joi.object({
+    partyId: Joi.string().regex(/^[0-9]+$/)
+  });
+
   return schema.validate(data);
 };
 
@@ -76,5 +85,6 @@ export {
   validateUserSignup,
   validateUserSignIn,
   validatePoliticalParty,
-  validatePoliticalOffice
+  validatePoliticalOffice,
+  validateSpecificPartyId
 };
