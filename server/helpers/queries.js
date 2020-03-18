@@ -54,6 +54,22 @@ const createParty = async data => {
   return party;
 };
 
+const retrievePartyById = async (columns, value) => {
+  const client = await pool.connect();
+  const data = await client.query(
+    `SELECT ${columns} FROM parties WHERE id = $1`,
+    [value]
+  );
+  client.release();
+  return data.rows[0];
+};
+
+const deleteParty = async id => {
+  const client = await pool.connect();
+  await client.query(`DELETE FROM parties WHERE id = $1`, [id]);
+  await client.release();
+};
+
 const retrieveSpecificParty = async data => {
   const client = await pool.connect();
   const party = await client.query(
@@ -63,7 +79,7 @@ const retrieveSpecificParty = async data => {
   client.release();
 
   return party.rows[0];
-}
+};
 
 const retrieveAllParties = async () => {
   const client = await pool.connect();
@@ -78,6 +94,8 @@ export {
   createUser,
   retrieveParty,
   createParty,
+  retrievePartyById,
+  deleteParty,
   retrieveSpecificParty,
   retrieveAllParties
 };

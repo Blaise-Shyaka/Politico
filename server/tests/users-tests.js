@@ -232,7 +232,7 @@ describe('Viewing a specific political party', () => {
       });
     done();
   });
-  
+
   it('should return status 404, if the party does not exist', done => {
     chai
       .request(app)
@@ -264,3 +264,4 @@ describe('Viewing a specific political party', () => {
       });
     done();
   });
+});
