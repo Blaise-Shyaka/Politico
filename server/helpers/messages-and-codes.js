@@ -14,8 +14,11 @@ const messages = {
   noToken: 'Invalid or no token was provided',
   notAllowed: 'Unauthorized to access this route.',
   partyExists: 'A party registered under that name already exists',
-  partyNotFound: 'The party you are trying to access was not found',
-  successfullyDeleted: 'The party was successfully deleted'
+  successfullyDeleted: 'The party was successfully deleted',
+  partyNotFound: 'The political party you are trying to access does not exist',
+  wrongParameterFormat:
+    'The parameter is in wrong format. It should be a number',
+  noPartiesFound: 'There are no parties recorded yet!'
 };
 
 export { codes, messages };
