@@ -3,14 +3,21 @@ import { codes, messages } from '../helpers/messages-and-codes';
 import {
   validatePoliticalParty,
   validatePoliticalOffice,
-  validateSpecificPartyId
+  validateSpecificPartyId,
+  validateOfficeId,
+  validateCandidate
 } from '../helpers/validation';
 
 import {
   createParty,
   retrieveParty,
   createOffice,
-  retrievePartyById
+  retrievePartyById,
+  retrieveSpecificParty,
+  retrieveSpecificOffice,
+  retrieveSpecificUser,
+  registerCandidate,
+  candidateExists
 } from '../helpers/queries';
 
 const createPoliticalParty = async (req, res) => {
@@ -106,4 +113,74 @@ const createPoliticalOffice = async (req, res) => {
     .json({ status: res.statusCode, data: office });
 };
 
-export { createPoliticalParty, createPoliticalOffice, deletePoliticalParty };
+const registerPolitician = async (req, res) => {
+  // Check if user accessing this route is an admin
+  const { isAdmin } = req.user;
+  if (!isAdmin)
+    return res
+      .status(codes.unauthorized)
+      .json({ status: res.statusCode, error: messages.notAllowed });
+
+  // Validate and fetch party, office, and user ID
+  const { error, value } = await validateOfficeId(req.params);
+  const {
+    error: candidateError,
+    value: candidateValue
+  } = await validateCandidate(req.body);
+
+  if (error)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: messages.wrongParameterFormat });
+
+  if (candidateError)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: candidateError.message });
+
+  // Check if party, office and user exist
+  const partyId = parseInt(candidateValue.party, 10);
+  const userId = parseInt(candidateValue.user, 10);
+  const officeId = parseInt(value.officeId, 10);
+
+  const party = await retrieveSpecificParty(partyId);
+  const office = await retrieveSpecificOffice(officeId);
+  const user = await retrieveSpecificUser('*', userId);
+
+  if (!party)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.partyNotFound });
+
+  if (!office)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.officeNotFound });
+
+  if (!user)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.noUser });
+
+  // Check if a candidate is already running for that specific office
+  const politician = await candidateExists(officeId, userId);
+
+  if (politician)
+    return res
+      .status(codes.conflict)
+      .json({ status: res.statusCode, error: messages.candidateAlreadyExists });
+
+  // Register candidate and send a response
+  const candidate = await registerCandidate(officeId, partyId, userId);
+
+  return res
+    .status(codes.resourceCreated)
+    .json({ status: res.statusCode, data: candidate });
+};
+
+export {
+  createPoliticalParty,
+  createPoliticalOffice,
+  deletePoliticalParty,
+  registerPolitician
+};

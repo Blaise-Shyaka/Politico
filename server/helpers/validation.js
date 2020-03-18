@@ -62,9 +62,7 @@ const validatePoliticalParty = data => {
 
 const validateOfficeId = data => {
   const schema = Joi.object({
-    officeId: Joi.string()
-      .trim()
-      .regex(/^[0-9]+$/)
+    officeId: Joi.string().regex(/^[0-9]+$/)
   });
 
   return schema.validate(data);
@@ -91,11 +89,21 @@ const validateSpecificPartyId = data => {
   return schema.validate(data);
 };
 
+const validateCandidate = data => {
+  const schema = Joi.object({
+    party: Joi.string().regex(/^[0-9]+$/),
+    user: Joi.string().regex(/^[0-9]+$/)
+  });
+
+  return schema.validate(data);
+};
+
 export {
   validateUserSignup,
   validateUserSignIn,
   validatePoliticalParty,
   validateOfficeId,
   validatePoliticalOffice,
-  validateSpecificPartyId
+  validateSpecificPartyId,
+  validateCandidate
 };
