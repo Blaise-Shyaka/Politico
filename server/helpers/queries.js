@@ -68,6 +68,25 @@ const deleteParty = async id => {
   const client = await pool.connect();
   await client.query(`DELETE FROM parties WHERE id = $1`, [id]);
   await client.release();
+}
+
+const retrieveSpecificParty = async data => {
+  const client = await pool.connect();
+  const party = await client.query(
+    'SELECT id, name, logo_url FROM parties WHERE id = $1',
+    [data]
+  );
+  client.release();
+
+  return party.rows[0];
+}
+
+const retrieveAllParties = async () => {
+  const client = await pool.connect();
+  const parties = await client.query(`SELECT id, name, logo_url FROM parties`);
+  client.release();
+
+  return parties.rows;
 };
 
 export {
@@ -77,4 +96,6 @@ export {
   createParty,
   retrievePartyById,
   deleteParty
+  retrieveSpecificParty,
+  retrieveAllParties
 };
