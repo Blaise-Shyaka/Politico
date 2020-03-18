@@ -3,6 +3,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 import { codes, messages } from '../helpers/messages-and-codes';
+import generateToken from '../helpers/generate-token';
 
 const { should } = chai;
 
@@ -143,6 +144,49 @@ describe('User sign in', () => {
           'phoneNumber',
           'isAdmin'
         ]);
+      });
+    done();
+  });
+});
+
+describe('View all political parties', () => {
+  const userData = {
+    id: 1,
+    email: 'user@gmail.com',
+    phoneNumber: '0775677899',
+    isAdmin: false
+  };
+
+  const userToken = generateToken(userData);
+
+  beforeEach(done => setTimeout(done, 500));
+
+  it('should return status 200 and an array of parties', done => {
+    chai
+      .request(app)
+      .get('/api/parties')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'data']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.okay);
+        res.body.data.should.be.a('array');
+      });
+    done();
+  });
+
+  it('should return status 401, if wrong or no token was provided', done => {
+    chai
+      .request(app)
+      .get('/api/parties')
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.unauthorized);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.noToken);
       });
     done();
   });
