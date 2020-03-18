@@ -9,8 +9,9 @@ import { codes, messages } from '../helpers/messages-and-codes';
 import {
   retrieveUser,
   createUser,
-  retrieveSpecificParty,
-  retrieveAllParties
+  retrieveAllParties,
+  retrieveAllOffices,
+  retrieveSpecificParty
 } from '../helpers/queries';
 
 const userSignUp = async (req, res) => {
@@ -147,4 +148,24 @@ const viewAllParties = async (req, res) => {
   return res.status(codes.okay).json({ status: res.statusCode, data: parties });
 };
 
-export { userSignUp, userSignIn, viewSpecificParty, viewAllParties };
+const viewAllOffices = async (req, res) => {
+  // Retrieve all offices
+  const offices = await retrieveAllOffices();
+
+  // Check if there are no parties
+  if (offices.length === 0)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.noOfficesFound });
+
+  // Send response
+  return res.status(codes.okay).json({ status: res.statusCode, data: offices });
+};
+
+export {
+  userSignUp,
+  userSignIn,
+  viewAllParties,
+  viewSpecificParty,
+  viewAllOffices
+};

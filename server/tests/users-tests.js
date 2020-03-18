@@ -192,6 +192,49 @@ describe('View all political parties', () => {
   });
 });
 
+describe('View all political offices', () => {
+  const userData = {
+    id: 1,
+    email: 'user@gmail.com',
+    phoneNumber: '0775677899',
+    isAdmin: false
+  };
+
+  const userToken = generateToken(userData);
+
+  beforeEach(done => setTimeout(done, 500));
+
+  it('should return status 200 and an array of offices', done => {
+    chai
+      .request(app)
+      .get('/api/offices')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'data']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.okay);
+        res.body.data.should.be.a('array');
+      });
+    done();
+  });
+
+  it('should return status 401, if wrong or no token was provided', done => {
+    chai
+      .request(app)
+      .get('/api/offices')
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.unauthorized);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.noToken);
+      });
+    done();
+  });
+});
+
 describe('Viewing a specific political party', () => {
   const userToken = generateToken({
     id: 1,
