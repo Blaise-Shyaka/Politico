@@ -22,7 +22,9 @@ const messages = {
   successfullyDeleted: 'The party was successfully deleted',
   partyNotFound: 'The political party you are trying to access does not exist',
   wrongParameterFormat:
-    'The parameter is in wrong format. It should be a number'
+    'The parameter is in wrong format. It should be a number',
+  candidateNotFound: 'The candidate you are trying to vote for was not found',
+  alreadyVoted: 'You have already voted for this office'
 };
 
 export { codes, messages };

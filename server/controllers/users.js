@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt';
+import moment from 'moment';
 import generateToken from '../helpers/generate-token';
 import {
   validateUserSignup,
   validateUserSignIn,
   validateOfficeId,
-  validateSpecificPartyId
+  validateSpecificPartyId,
+  validateVote
 } from '../helpers/validation';
 import { codes, messages } from '../helpers/messages-and-codes';
 import {
@@ -13,7 +15,10 @@ import {
   retrieveAllParties,
   retrieveSpecificOffice,
   retrieveAllOffices,
-  retrieveSpecificParty
+  retrieveSpecificParty,
+  checkCandidacy,
+  voteExists,
+  createVote
 } from '../helpers/queries';
 
 const userSignUp = async (req, res) => {
@@ -185,11 +190,54 @@ const viewAllOffices = async (req, res) => {
   return res.status(codes.okay).json({ status: res.statusCode, data: offices });
 };
 
+const castVote = async (req, res) => {
+  // Fetch user ID
+  const { id: userId } = req.user;
+  if (!userId)
+    return res
+      .status(codes.unauthorized)
+      .json({ status: res.statusCode, error: messages.noToken });
+
+  // Validate user input
+  const { error, value } = await validateVote(req.body);
+  if (error)
+    return res
+      .status(codes.badRequest)
+      .json({ status: res.statusCode, error: error.message });
+
+  // Check if a candidate the user is voting for exists
+  const { office: officeId, candidate: candidateId } = value;
+  const politician = await checkCandidacy(officeId, candidateId);
+
+  if (!politician)
+    return res
+      .status(codes.notFound)
+      .json({ status: res.statusCode, error: messages.candidateNotFound });
+
+  // Check if the user has not voted for this same office
+  const hasVoted = await voteExists(userId, candidateId);
+  if (hasVoted)
+    return res
+      .status(codes.conflict)
+      .json({ status: res.statusCode, error: messages.alreadyVoted });
+
+  // Generate voting time and cast vote
+  const createdOn = moment().format('LLL');
+
+  // Create vote and send response
+  const vote = await createVote(createdOn, userId, officeId, candidateId);
+  const { created_by: voter, office, candidate } = vote;
+  return res
+    .status(codes.resourceCreated)
+    .json({ status: res.statusCode, data: { voter, office, candidate } });
+};
+
 export {
   userSignUp,
   userSignIn,
   viewAllParties,
   viewSpecificOffice,
   viewSpecificParty,
-  viewAllOffices
+  viewAllOffices,
+  castVote
 };

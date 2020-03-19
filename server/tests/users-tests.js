@@ -382,3 +382,97 @@ describe('Viewing a specific political party', () => {
     done();
   });
 });
+
+describe('Casting a vote', () => {
+  const userToken = generateToken({
+    id: 1,
+    email: 'bluewest@gmail.com',
+    phoneNumber: '0785007666',
+    isAdmin: false
+  });
+
+  beforeEach(done => setTimeout(done, 500));
+
+  it('should return status 201, if a vote is successfully cast', done => {
+    chai
+      .request(app)
+      .post('/api/votes')
+      .set('Authorization', userToken)
+      .send({ office: '1', candidate: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'data']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.resourceCreated);
+        res.body.data.should.be.a('object');
+        res.body.data.should.include.keys(['voter', 'office', 'candidate']);
+      });
+    done();
+  });
+
+  it('should return status 401, if invalid or no token was provided', done => {
+    chai
+      .request(app)
+      .post('/api/votes')
+      .send({ office: '1', candidate: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.unauthorized);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.noToken);
+      });
+    done();
+  });
+
+  it('should return status 400, if user input is invalid or wrong', done => {
+    chai
+      .request(app)
+      .post('/api/votes')
+      .set('Authorization', userToken)
+      .send({ office: '1a', candidate: '1c' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+      });
+    done();
+  });
+
+  it('should return status 404, if a candidate the user is voting for does not exist', done => {
+    chai
+      .request(app)
+      .post('/api/votes')
+      .set('Authorization', userToken)
+      .send({ office: '100', candidate: '100' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.candidateNotFound);
+      });
+    done();
+  });
+
+  it('should return status 409, if a user votes twice', done => {
+    chai
+      .request(app)
+      .post('/api/votes')
+      .set('Authorization', userToken)
+      .send({ office: '1', candidate: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.conflict);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.alreadyVoted);
+      });
+    done();
+  });
+});
