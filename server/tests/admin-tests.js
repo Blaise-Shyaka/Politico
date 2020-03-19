@@ -274,3 +274,148 @@ describe('Deleting a political party', () => {
     done();
   });
 });
+
+describe('Registering a user as a candidate', () => {
+  const adminToken = generateToken({
+    id: 1,
+    email: 'stevengerard@gmail.com',
+    phoneNumber: '0789553666',
+    isAdmin: true
+  });
+
+  const notAnAdminToken = generateToken({
+    id: 2,
+    email: 'notAdmin@gmail.com',
+    phoneNumber: '0789553666',
+    isAdmin: false
+  });
+
+  beforeEach(done => setTimeout(done, 500));
+
+  it('should return status 201, if a user is registered successfully', done => {
+    chai
+      .request(app)
+      .post('/api/office/1/register')
+      .set('Authorization', adminToken)
+      .send({ party: '1', user: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.resourceCreated);
+        res.body.data.should.be.a('object');
+        res.body.data.should.include.keys(['office', 'party', 'candidate']);
+      });
+    done();
+  });
+
+  it('should return status 401, if the user trying to access this route is not an admin', done => {
+    chai
+      .request(app)
+      .post('/api/office/1/register')
+      .set('Authorization', notAnAdminToken)
+      .send({ party: '1', user: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.unauthorized);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.notAllowed);
+      });
+    done();
+  });
+
+  it('should return status 400, if the office ID input is invalid', done => {
+    chai
+      .request(app)
+      .post('/api/office/1aa/register')
+      .set('Authorization', adminToken)
+      .send({ party: '1', user: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.wrongParameterFormat);
+      });
+    done();
+  });
+
+  it('should return status 400, if the candidate information input is invalid or wrong', done => {
+    chai
+      .request(app)
+      .post('/api/office/1/register')
+      .set('Authorization', adminToken)
+      .send({ partyId: '1', userId: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+      });
+    done();
+  });
+
+  it('should return status 400, if the affiliated party does not exist', done => {
+    chai
+      .request(app)
+      .post('/api/office/1/register')
+      .set('Authorization', adminToken)
+      .send({ party: '100', user: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.partyNotFound);
+      });
+    done();
+  });
+
+  it('should return status 400, if the user to be registered does not exist', done => {
+    chai
+      .request(app)
+      .post('/api/office/1/register')
+      .set('Authorization', adminToken)
+      .send({ party: '1', user: '100' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.noUser);
+      });
+    done();
+  });
+
+  it('should return status 400, if office to run for does not exist', done => {
+    chai
+      .request(app)
+      .post('/api/office/100/register')
+      .set('Authorization', adminToken)
+      .send({ party: '1', user: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.officeNotFound);
+      });
+    done();
+  });
+
+  it('should return status 409, if a candidate is already running for an office', done => {
+    chai
+      .request(app)
+      .post('/api/office/1/register')
+      .set('Authorization', adminToken)
+      .send({ party: '1', user: '1' })
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.conflict);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.candidateAlreadyExists);
+      });
+    done();
+  });
+});
