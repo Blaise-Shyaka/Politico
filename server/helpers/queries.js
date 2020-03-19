@@ -14,6 +14,17 @@ const retrieveUser = async (columns, value) => {
   }
 };
 
+const retrieveSpecificUser = async (columns, value) => {
+  const client = await pool.connect();
+  const data = await client.query(
+    `SELECT ${columns} FROM users WHERE id = $1`,
+    [value]
+  );
+  client.release();
+
+  return data.rows[0];
+};
+
 const createUser = async (data, hashedPassword) => {
   const client = await pool.connect();
   const user = await client.query(
@@ -152,6 +163,29 @@ const createVote = async (date, userId, officeId, candidateId) => {
   return vote.rows[0];
 };
 
+const registerCandidate = async (officeId, partyId, userId) => {
+  const client = await pool.connect();
+  const candidate = await client.query(
+    `INSERT INTO candidates(office, party, candidate)
+    VALUES($1, $2, $3) RETURNING *`,
+    [officeId, partyId, userId]
+  );
+  client.release();
+
+  return candidate.rows[0];
+};
+
+const candidateExists = async (officeId, userId) => {
+  const client = await pool.connect();
+  const politician = await client.query(
+    `SELECT office, candidate FROM candidates WHERE office = $1 AND candidate = $2`,
+    [officeId, userId]
+  );
+  client.release();
+
+  return politician.rows[0];
+};
+
 export {
   retrieveUser,
   createUser,
@@ -166,5 +200,8 @@ export {
   retrieveAllParties,
   checkCandidacy,
   voteExists,
-  createVote
+  createVote,
+  registerCandidate,
+  retrieveSpecificUser,
+  candidateExists
 };

@@ -55,18 +55,14 @@ const createTablesQuery = `
           PRIMARY KEY(candidate, office)
       );
 
-      INSERT INTO candidates (office, party, candidate)
-          VALUES(1, 1, 1);
-
       CREATE TABLE IF NOT EXISTS votes (
         created_on VARCHAR NOT NULL,
         created_by INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
         office INT REFERENCES offices(id) ON DELETE CASCADE NOT NULL,
         candidate INT NOT NULL,
         PRIMARY KEY(office, created_by)
-      );
-  `;
-
+       );
+    `;
 const dropTablesQuery = `
       DROP TABLE IF EXISTS users CASCADE;
 
@@ -75,7 +71,7 @@ const dropTablesQuery = `
       DROP TABLE IF EXISTS offices CASCADE;
 
       DROP TABLE IF EXISTS candidates CASCADE;
-
+      
       DROP TABLE IF EXISTS votes CASCADE;
 `;
 
