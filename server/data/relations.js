@@ -47,15 +47,22 @@ const createTablesQuery = `
         'testOfficeType', 
         'testOfficeName'
         );
-      
-      CREATE TABLE IF NOT EXISTS candidates(
-        office INT REFERENCES offices(id) ON DELETE CASCADE NOT NULL,
-        party INT REFERENCES parties(id) ON DELETE CASCADE NOT NULL,
-        candidate INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-        PRIMARY KEY(candidate, office)
-      );
-  `;
 
+      CREATE TABLE IF NOT EXISTS candidates(
+          office INT REFERENCES offices(id) ON DELETE CASCADE NOT NULL,
+          party INT REFERENCES parties(id) ON DELETE CASCADE NOT NULL,
+          candidate INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+          PRIMARY KEY(candidate, office)
+      );
+
+      CREATE TABLE IF NOT EXISTS votes (
+        created_on VARCHAR NOT NULL,
+        created_by INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+        office INT REFERENCES offices(id) ON DELETE CASCADE NOT NULL,
+        candidate INT NOT NULL,
+        PRIMARY KEY(office, created_by)
+       );
+    `;
 const dropTablesQuery = `
       DROP TABLE IF EXISTS users CASCADE;
 
@@ -64,6 +71,8 @@ const dropTablesQuery = `
       DROP TABLE IF EXISTS offices CASCADE;
 
       DROP TABLE IF EXISTS candidates CASCADE;
+      
+      DROP TABLE IF EXISTS votes CASCADE;
 `;
 
 const createTables = async () => {

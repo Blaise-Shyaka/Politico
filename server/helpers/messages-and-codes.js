@@ -23,6 +23,8 @@ const messages = {
   partyNotFound: 'The political party you are trying to access does not exist',
   wrongParameterFormat:
     'The parameter is in wrong format. It should be a number',
+  candidateNotFound: 'The candidate you are trying to vote for was not found',
+  alreadyVoted: 'You have already voted for this office',
   noUser: 'The user you are trying to register as a candidate does not exist',
   candidateAlreadyExists:
     'The user you are trying to register is already a candidate'

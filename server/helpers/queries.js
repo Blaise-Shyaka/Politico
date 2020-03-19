@@ -128,6 +128,41 @@ const createOffice = async data => {
   return office.rows[0];
 };
 
+const checkCandidacy = async (office, candidate) => {
+  const client = await pool.connect();
+  const politician = await client.query(
+    `SELECT * FROM candidates WHERE office = $1 AND candidate = $2`,
+    [office, candidate]
+  );
+
+  await client.release();
+
+  return politician.rows[0];
+};
+
+const voteExists = async (voter, office) => {
+  const client = await pool.connect();
+  const vote = await client.query(
+    'SELECT * FROM votes WHERE created_by = $1 AND office = $2',
+    [voter, office]
+  );
+  await client.release();
+
+  return vote.rows[0];
+};
+
+const createVote = async (date, userId, officeId, candidateId) => {
+  const client = await pool.connect();
+  const vote = await client.query(
+    `INSERT INTO votes (created_on, created_by, office, candidate)
+    VALUES($1, $2, $3, $4) RETURNING *`,
+    [date, userId, officeId, candidateId]
+  );
+  client.release();
+
+  return vote.rows[0];
+};
+
 const registerCandidate = async (officeId, partyId, userId) => {
   const client = await pool.connect();
   const candidate = await client.query(
@@ -163,6 +198,9 @@ export {
   deleteParty,
   retrieveSpecificParty,
   retrieveAllParties,
+  checkCandidacy,
+  voteExists,
+  createVote,
   registerCandidate,
   retrieveSpecificUser,
   candidateExists
