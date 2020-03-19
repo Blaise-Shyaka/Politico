@@ -18,7 +18,9 @@ import {
   retrieveSpecificParty,
   checkCandidacy,
   voteExists,
-  createVote
+  createVote,
+  officeExists,
+  countVotes
 } from '../helpers/queries';
 import sendResponse from '../helpers/send-response';
 
@@ -198,6 +200,30 @@ const castVote = async (req, res) => {
     .json({ status: res.statusCode, data: { voter, office, candidate } });
 };
 
+const getElectionResults = async (req, res) => {
+  // Fetch and validate officeID
+  const { error, value } = await validateOfficeId(req.params);
+  if (error) return sendResponse(res, codes.badRequest, error.message);
+
+  // Check if office ID exists
+  const { officeId } = value;
+  const officeOfInterest = await officeExists(officeId);
+  if (!officeOfInterest)
+    return sendResponse(res, codes.notFound, messages.officeNotFound);
+
+  // Query database for votes count
+  const votes = await countVotes(officeOfInterest.office);
+
+  const votesToDisplay = await votes.map(elt => {
+    const { candidate, count: results } = elt;
+    return { officeId, candidate, results };
+  });
+
+  return res
+    .status(codes.okay)
+    .json({ status: res.statusCode, data: votesToDisplay });
+};
+
 export {
   userSignUp,
   userSignIn,
@@ -205,5 +231,6 @@ export {
   viewSpecificOffice,
   viewSpecificParty,
   viewAllOffices,
-  castVote
+  castVote,
+  getElectionResults
 };

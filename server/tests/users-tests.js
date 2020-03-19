@@ -493,3 +493,76 @@ describe('Casting a vote', () => {
     done();
   });
 });
+
+describe('Election results', () => {
+  const userToken = generateToken({
+    id: 1,
+    email: 'bluewest@gmail.com',
+    phoneNumber: '0785007666',
+    isAdmin: false
+  });
+
+  beforeEach(done => setTimeout(done, 500));
+
+  it('should return status 200, if the results are successfully calculated', done => {
+    chai
+      .request(app)
+      .get('/api/offices/1/result')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'data']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.okay);
+        res.body.data.should.be.a('array');
+      });
+    done();
+  });
+
+  it('should return status 400, if office id is invalid', done => {
+    chai
+      .request(app)
+      .get('/api/offices/1aa/result')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.badRequest);
+        res.body.error.should.be.a('string');
+      });
+    done();
+  });
+
+  it('should return status 404, if office id does not exist', done => {
+    chai
+      .request(app)
+      .get('/api/offices/100/result')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.officeNotFound);
+      });
+    done();
+  });
+
+  it('should return status 404, if office id does not exist', done => {
+    chai
+      .request(app)
+      .get('/api/offices/100/result')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.body.should.include.keys(['status', 'error']);
+        res.body.status.should.be.a('number');
+        res.body.status.should.equal(codes.notFound);
+        res.body.error.should.be.a('string');
+        res.body.error.should.equal(messages.officeNotFound);
+      });
+    done();
+  });
+});

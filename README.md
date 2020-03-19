@@ -5,3 +5,23 @@
 Politico enables citizens to give their mandate to politicians running for different government offices
 while building trust in the process through transparency.
 
+### Pre-requisites
+
+- Node JS
+- npm
+
+### Installation and key commands
+
+- Clone this repository: `git clone https://github.com/Blaise-Shyaka/Politico.git`
+- Install dependencies: `npm install`
+- Run the server locally: `npm run dev`
+- Run tests locally: `npm run test`
+
+### Created by:
+
+Blaise P. SHYAKA
+
+### Contributors:
+
+Alain BURINDI
+

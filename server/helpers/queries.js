@@ -186,6 +186,29 @@ const candidateExists = async (officeId, userId) => {
   return politician.rows[0];
 };
 
+const officeExists = async data => {
+  const client = await pool.connect();
+  const office = await client.query(
+    `SELECT office FROM votes WHERE office = $1`,
+    [data]
+  );
+  client.release();
+
+  return office.rows[0];
+};
+
+const countVotes = async officeId => {
+  const client = await pool.connect();
+  const votes = await client.query(
+    `SELECT candidate, COUNT(*) FROM votes 
+  WHERE office = $1 GROUP BY candidate`,
+    [officeId]
+  );
+  await client.release();
+
+  return votes.rows;
+};
+
 export {
   retrieveUser,
   createUser,
@@ -203,5 +226,7 @@ export {
   createVote,
   registerCandidate,
   retrieveSpecificUser,
-  candidateExists
+  candidateExists,
+  officeExists,
+  countVotes
 };
