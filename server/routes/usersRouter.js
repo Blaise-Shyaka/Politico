@@ -6,7 +6,8 @@ import {
   viewSpecificOffice,
   viewAllOffices,
   viewSpecificParty,
-  castVote
+  castVote,
+  getElectionResults
 } from '../controllers/users';
 
 import authoriseUser from '../middlewares/authorization';
@@ -20,5 +21,6 @@ userRouter.get('/parties', authoriseUser, viewAllParties);
 userRouter.get('/offices/:officeId', authoriseUser, viewSpecificOffice);
 userRouter.get('/offices', authoriseUser, viewAllOffices);
 userRouter.post('/votes', authoriseUser, castVote);
+userRouter.get('/offices/:officeId/result', authoriseUser, getElectionResults);
 
 export default userRouter;
