@@ -35,9 +35,12 @@ Click [here](https://blaise-shyaka.github.io/Politico/templates/) to view the li
 - Run the server locally: `npm run dev`
 - Run tests locally: `npm run test`
 
-### Created by:
+# Author
 
-Blaise P. SHYAKA
+👤 **Blaise P. SHYAKA**
+- Github: [Blaise-Shyaka](https://github.com/Blaise-Shyaka)
+- Twitter: [@blaiseshyaka95](https://twitter.com/blaiseshyaka95)
+- Linkedin: [Linkedin](https://linkedin.com/in/blaise-pascal-shyaka-b1340b111)
 
 ### Contributors:
 
