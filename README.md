@@ -7,6 +7,15 @@ while building trust in the process through transparency.
 
 ![Project Screenshot](politico-screenshot.png)
 
+## Built with
+
+- HTML, CSS, JS
+- Node JS
+- Express JS
+- PostgreSQL
+- Babel JS
+- Mocha and Chai
+
 ### Pre-requisites
 
 - Node JS
