@@ -16,6 +16,10 @@ while building trust in the process through transparency.
 - Babel JS
 - Mocha and Chai
 
+## Live demo
+
+Click [here](https://blaise-shyaka.github.io/Politico/templates/) to view the live project
+
 ### Pre-requisites
 
 - Node JS
