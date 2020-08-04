@@ -42,7 +42,11 @@ Click [here](https://blaise-shyaka.github.io/Politico/templates/) to view the li
 - Twitter: [@blaiseshyaka95](https://twitter.com/blaiseshyaka95)
 - Linkedin: [Linkedin](https://linkedin.com/in/blaise-pascal-shyaka-b1340b111)
 
-### Contributors:
+# Contributor:
 
-Alain BURINDI
+👤 **Alain Burindi**
+- Github: [alainburindi](https://github.com/alainburindi)
+- Twitter: [@alainburindi](https://twitter.com/alainburindi)
+
+
 
