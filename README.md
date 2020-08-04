@@ -7,7 +7,7 @@ while building trust in the process through transparency.
 
 ![Project Screenshot](politico-screenshot.png)
 
-## Built with
+# Built with
 
 - HTML, CSS, JS
 - Node JS
@@ -16,16 +16,19 @@ while building trust in the process through transparency.
 - Babel JS
 - Mocha and Chai
 
-## Live demo
+# Live demo
 
 Click [here](https://blaise-shyaka.github.io/Politico/templates/) to view the live project
 
-### Pre-requisites
+# Get Started
 
-- Node JS
-- npm
+## Pre-requisites
 
-### Installation and key commands
+- Node v12 and above
+- npm v6 and above
+- Code editor
+
+## Setup and installation
 
 - Clone this repository: `git clone https://github.com/Blaise-Shyaka/Politico.git`
 - Install dependencies: `npm install`
