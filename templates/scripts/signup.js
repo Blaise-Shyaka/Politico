@@ -92,15 +92,36 @@ function validateEmail() {
   resetField(feedback);
 }
 
+function validatePhoneNumber() {
+  const phoneNumber = document.signup.phoneNumber.value;
+  const feedback = document.querySelector('.tel-feedback');
+
+  // Check if the phoneNumber field is not empty
+  if (phoneNumber.length === 0 || phoneNumber.length !== 10) {
+    feedback.innerHTML = 'A phone number should be 10 characters long';
+    return;
+  }
+
+  // Check if it is made of numbers between 0 and 9
+  if (!phoneNumber.match(/^[+]?[0-9]+$/)) {
+    feedback.innerHTML = 'A phone number should be comprised of numbers';
+    return;
+  }
+
+  // Remove the text in the phone number field
+  resetField(feedback);
+}
+
 function validateAndSendData() {
   validateFirstName();
   validateLastName();
   validateEmail();
+  validatePhoneNumber();
 }
 
 const createAccount = document.querySelector('#create-account');
 
 createAccount.addEventListener('click', () => {
   //   window.location.href = '../html/user-view-parties.html';
-  validateEmail();
+  validateAndSendData();
 });
