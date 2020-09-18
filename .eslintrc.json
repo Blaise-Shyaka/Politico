@@ -4,5 +4,6 @@
     "rules": {
         "prettier/prettier":"warn",
         "no-unused-vars":"warn"
-    }
+    },
+    "parser": "babel-eslint"
 }
