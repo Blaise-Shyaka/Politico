@@ -9,6 +9,15 @@ function sendFeedback(field, message) {
   field.innerHTML = message;
 }
 
+const user = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phoneNumber: '',
+  password: '',
+  confirmPassword: ''
+};
+
 function validateFirstName() {
   const firstName = document.signup.firstName.value.trim();
   const feedbackField = document.querySelector('.firstName-feedback');
@@ -37,6 +46,9 @@ function validateFirstName() {
 
   // Remove the text in the feedback field
   resetField(feedbackField);
+
+  // Assign firstName value to user object
+  user.firstName = firstName;
 }
 
 function validateLastName() {
@@ -66,6 +78,9 @@ function validateLastName() {
 
   // Remove the text in the feedback field
   resetField(feedbackField);
+
+  // Assign lastName value to user object
+  user.lastName = lastName;
 }
 
 function validateEmail() {
@@ -104,6 +119,9 @@ function validateEmail() {
 
   // Remove the text in the feedback field
   resetField(feedbackField);
+
+  // Assign email value to user object
+  user.email = email;
 }
 
 function validatePhoneNumber() {
@@ -125,7 +143,7 @@ function validatePhoneNumber() {
     return;
   }
 
-  // Check if phooneNumber is made of numbers between 0 and 9
+  // Check if phoneNumber is made of numbers between 0 and 9
   if (!/^[+]?[0-9]+$/.test(phoneNumber)) {
     sendFeedback(feedbackField, shouldBeNumbers);
     return;
@@ -133,6 +151,9 @@ function validatePhoneNumber() {
 
   // Remove the text in the phone number feedback field
   resetField(feedbackField);
+
+  // Assign phoneNumber value to user object
+  user.phoneNumber = phoneNumber;
 }
 
 function validatePassword() {
@@ -161,6 +182,9 @@ function validatePassword() {
   }
   // Remove text from the feedback field
   resetField(feedbackField);
+
+  // Assign password value to user object
+  user.password = password;
 }
 
 function validateConfirmPassword() {
@@ -199,6 +223,38 @@ function validateConfirmPassword() {
 
   // Reset the feedback field
   resetField(feedbackField);
+
+  // Assign confirmPassword value to user object
+  user.confirmPassword = confirmPassword;
+}
+
+async function sendRequestToServer() {
+  // Check if there is no empty value in the user object
+  let numberOfEmptyVals = 0;
+  Object.values(user).forEach(val => {
+    if (val.length === 0) numberOfEmptyVals += 1;
+  });
+  if (numberOfEmptyVals) return;
+
+  // Send request to the server
+  const response = await fetch(
+    'https://politico-web-io.herokuapp.com/api/auth/signup/',
+    {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    }
+  );
+
+  const data = response.json();
+
+  if (data.id) {
+    const container = document.querySelector('.container');
+    container.innerHTML =
+      '<p>Account created successfully. Proceed with sign in!</p>';
+  }
 }
 
 function validateAndSendData() {
@@ -208,11 +264,13 @@ function validateAndSendData() {
   validatePhoneNumber();
   validatePassword();
   validateConfirmPassword();
+  sendRequestToServer();
 }
 
 const createAccount = document.querySelector('#create-account');
 
-createAccount.addEventListener('click', () => {
+createAccount.addEventListener('click', event => {
   //   window.location.href = '../html/user-view-parties.html';
+  event.preventDefault();
   validateAndSendData();
 });
