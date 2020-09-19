@@ -6,8 +6,8 @@
   "scripts": {
     "drop-tables": "babel-node ./server/data/relations dropTables",
     "create-tables": "babel-node ./server/data/relations createTables",
-    "dev": "SET NODE_ENV=dev&& nodemon --exec babel-node ./server/app.js",
-    "test": "SET NODE_ENV=test&& npm run drop-tables && npm run create-tables && nyc mocha --require @babel/register ./server/tests/ --exit",
+    "dev": "NODE_ENV=dev&& nodemon --exec babel-node ./server/app.js",
+    "test": "NODE_ENV=test&& npm run drop-tables && npm run create-tables && nyc mocha --require @babel/register ./server/tests/ --exit",
     "coverage": "npm test && nyc report --reporter=text-lcov | coveralls",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./server -s",
