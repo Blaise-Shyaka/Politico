@@ -108,7 +108,32 @@ function validatePhoneNumber() {
     return;
   }
 
-  // Remove the text in the phone number field
+  // Remove the text in the phone number feedback field
+  resetField(feedback);
+}
+
+function validatePassword() {
+  const password = document.signup.password.value;
+  const feedback = document.querySelector('.password-feedback');
+
+  // Check if the password field is empty
+  if (password.length === 0) {
+    feedback.innerHTML = 'The password is required';
+    return;
+  }
+
+  // Check if it's comprised of alphanumeric characters
+  if (!/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i.test(password)) {
+    feedback.innerHTML =
+      'The password should contain at least numbers and letters';
+    return;
+  }
+  // Check if it's not less than 8 characters
+  if (password.length < 8) {
+    feedback.innerHTML = 'The password should contain at least 8 characters';
+    return;
+  }
+  // Remove text from the feedback field
   resetField(feedback);
 }
 
@@ -117,6 +142,7 @@ function validateAndSendData() {
   validateLastName();
   validateEmail();
   validatePhoneNumber();
+  validatePassword();
 }
 
 const createAccount = document.querySelector('#create-account');
