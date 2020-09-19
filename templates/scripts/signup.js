@@ -30,7 +30,7 @@ function validateFirstName() {
   }
 
   // Check if the first name is only made by alphabet letters
-  if (!firstName.match(/^[a-zA-Z]+$/)) {
+  if (!/^[a-zA-Z]+$/.test(firstName)) {
     sendFeedback(feedbackField, shouldBeLetters);
     return;
   }
@@ -59,7 +59,7 @@ function validateLastName() {
   }
 
   // Check if the last name is only comprised by alphabet letters
-  if (!lastName.match(/^[a-zA-Z]+$/)) {
+  if (!/^[a-zA-Z]+$/.test(lastName)) {
     sendFeedback(feedbackField, shouldBeLetters);
     return;
   }
@@ -107,7 +107,7 @@ function validateEmail() {
 }
 
 function validatePhoneNumber() {
-  const phoneNumber = document.signup.phoneNumber.value;
+  const phoneNumber = document.signup.phoneNumber.value.trim();
   const feedbackField = document.querySelector('.tel-feedback');
   const phoneNumberRequired = 'A phone number is required';
   const minPhoneNumberLength = 'A phone number should be 10 characters long';
@@ -126,7 +126,7 @@ function validatePhoneNumber() {
   }
 
   // Check if phooneNumber is made of numbers between 0 and 9
-  if (!phoneNumber.match(/^[+]?[0-9]+$/)) {
+  if (!/^[+]?[0-9]+$/.test(phoneNumber)) {
     sendFeedback(feedbackField, shouldBeNumbers);
     return;
   }
@@ -136,7 +136,7 @@ function validatePhoneNumber() {
 }
 
 function validatePassword() {
-  const password = document.signup.password.value;
+  const password = document.signup.password.value.trim();
   const feedbackField = document.querySelector('.password-feedback');
   const passwordRequired = 'The password is required';
   const shouldContainNumbersAndLetters =
@@ -163,12 +163,51 @@ function validatePassword() {
   resetField(feedbackField);
 }
 
+function validateConfirmPassword() {
+  const confirmPassword = document.signup.confirmPassword.value.trim();
+  const password = document.signup.password.value.trim();
+  const feedbackField = document.querySelector('.confirmPassword-feedback');
+  const isRequired = 'Repeated password required';
+  const shouldContainNumbersAndLetters =
+    'The password should contain at least numbers and letters';
+  const minPasswordLength = 'The password should contain at least 8 characters';
+  const shouldMatch = 'Passwords should match';
+
+  // Check if the field is not empty
+  if (confirmPassword.length === 0) {
+    sendFeedback(feedbackField, isRequired);
+    return;
+  }
+
+  // Check if the field is comprised of alphanumeric characters
+  if (!/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i.test(password)) {
+    sendFeedback(feedbackField, shouldContainNumbersAndLetters);
+    return;
+  }
+
+  // Check if confirmPassword is not less than 8 characters
+  if (confirmPassword.length < 8) {
+    sendFeedback(feedbackField, minPasswordLength);
+    return;
+  }
+
+  // Check if confirmPassword is the same as the password
+  if (confirmPassword !== password) {
+    sendFeedback(feedbackField, shouldMatch);
+    return;
+  }
+
+  // Reset the feedback field
+  resetField(feedbackField);
+}
+
 function validateAndSendData() {
   validateFirstName();
   validateLastName();
   validateEmail();
   validatePhoneNumber();
   validatePassword();
+  validateConfirmPassword();
 }
 
 const createAccount = document.querySelector('#create-account');
