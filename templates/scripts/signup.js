@@ -228,33 +228,47 @@ function validateConfirmPassword() {
   user.confirmPassword = confirmPassword;
 }
 
+function userResponse(res) {
+  const feedback = document.querySelector('.signup-feedback');
+  feedback.innerHTML = '';
+
+  if (res.status === 201) {
+    const container = document.querySelector('.container');
+    container.innerHTML =
+      '<p class="warning">Account created successfully. Proceed with sign in!</p>';
+    return;
+  }
+  feedback.innerHTML = `<span class="warning">${res.error}</span>`;
+}
+
 async function sendRequestToServer() {
   // Check if there is no empty value in the user object
   let numberOfEmptyVals = 0;
   Object.values(user).forEach(val => {
     if (val.length === 0) numberOfEmptyVals += 1;
   });
-  if (numberOfEmptyVals) return;
+
+  if (numberOfEmptyVals > 0) return;
 
   // Send request to the server
-  const response = await fetch(
-    'https://politico-web-io.herokuapp.com/api/auth/signup/',
-    {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
+  // const response = await fetch('http://localhost:5000/api/auth/signup', {
+  //   method: 'POST',
+  //   body: JSON.stringify(user),
+  //   headers: {
+  //     'Content-type': 'application/json; charset=UTF-8'
+  //   }
+
+  const response = await fetch('http://localhost:5000/api/auth/signup', {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
     }
-  );
+  });
 
-  const data = response.json();
-
-  if (data.id) {
-    const container = document.querySelector('.container');
-    container.innerHTML =
-      '<p>Account created successfully. Proceed with sign in!</p>';
-  }
+  const data = await response.json();
+  console.log(data);
+  await userResponse(data);
 }
 
 function validateAndSendData() {

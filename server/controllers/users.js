@@ -26,13 +26,13 @@ import sendResponse from '../helpers/send-response';
 
 const userSignUp = async (req, res) => {
   const { error, value } = await validateUserSignup(req.body);
-
+  console.log(value);
   // Return error 400, if user input validation fails
   if (error) return sendResponse(res, codes.badRequest, error.message);
 
   // Check if the user already exists
   const userExists = await retrieveUser('email', value.email);
-
+  console.log(userExists);
   if (userExists.rows.length > 0)
     return sendResponse(res, codes.conflict, messages.userExists);
 

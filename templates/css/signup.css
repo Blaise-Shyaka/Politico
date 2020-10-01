@@ -5,6 +5,10 @@ body {
     font-family: 'Work Sans', sans-serif;
 }
 
+.warning {
+    color: red;
+}
+
 nav {
     position: fixed;
     top: 0;
