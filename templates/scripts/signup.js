@@ -257,9 +257,9 @@ function validateConfirmPassword() {
 
 function userResponse(res) {
   if (res.status === 201) {
-    const container = document.querySelector('.container');
-    container.innerHTML =
-      '<p class="warning">Account created successfully. Proceed with sign in!</p>';
+    const signUpForm = document.querySelector('.signup-form');
+    signUpForm.innerHTML =
+      '<p class="success">Account created successfully. <a href="../index.html">Sign in</a> to proceed!</p>';
     return;
   }
   feedback.innerHTML = `<span class="warning">${res.error}</span>`;

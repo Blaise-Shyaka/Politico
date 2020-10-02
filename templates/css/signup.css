@@ -9,6 +9,10 @@ body {
     color: red;
 }
 
+.success {
+    color: rgb(5, 100, 5);
+}
+
 nav {
     position: fixed;
     top: 0;
