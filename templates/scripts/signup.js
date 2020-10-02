@@ -268,7 +268,6 @@ function userResponse(res) {
 async function sendRequestToServer() {
   // Empty the feedback field
   feedback.innerHTML = '';
-  console.log(numberOfWrongInputs);
 
   // Check if user input is valid
   if (numberOfWrongInputs > 0) {
@@ -278,24 +277,18 @@ async function sendRequestToServer() {
     return;
   }
 
-  // Send request to the server
-  // const response = await fetch('http://localhost:5000/api/auth/signup', {
-  //   method: 'POST',
-  //   body: JSON.stringify(user),
-  //   headers: {
-  //     'Content-type': 'application/json; charset=UTF-8'
-  //   }
-
-  const response = await fetch('http://localhost:5000/api/auth/signup', {
-    method: 'POST',
-    body: JSON.stringify(user),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8'
+  const response = await fetch(
+    'https://politico-web-io.herokuapp.com/api/auth/signup',
+    {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
     }
-  });
+  );
 
   const data = await response.json();
-  console.log(data);
   await userResponse(data);
 
   // Reset numberOfWrongInputs after sending a request
