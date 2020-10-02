@@ -3,12 +3,14 @@ import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import cors from 'cors';
+import path from 'path';
 import router from './routes/mainRouter';
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, './../.env') });
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
