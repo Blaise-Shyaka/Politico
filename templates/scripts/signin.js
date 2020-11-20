@@ -1,19 +1,24 @@
 /* eslint-env browser */
 
 // Validate the user input
-const email = document.loginForm.email.value.trim();
-const password = document.loginForm.password.value.trim();
+const flashSection = document.querySelector('.flash-section');
 const emailFeedback = document.querySelector('#email-feedback');
 const pwFeedback = document.querySelector('#password-feedback');
 const signin = document.querySelector('#signin');
+let validEmail;
+let validPassword;
+let email;
+let password;
 
-function validEmail() {
+function validateEmail() {
+  email = document.loginForm.email.value.trim();
   const includesAt = email.split('').includes('@');
   const includesdot = email.split('').includes('.');
   const atSignIndex = email.split('').indexOf('@');
   const dotIndex = email.split('').lastIndexOf('.');
   const emailRequired = 'Email address is required';
   const invalidEmail = 'Please provide a valid email address';
+  validEmail = false;
 
   // Check if the email field is not empty
   if (email.length === 0) {
@@ -36,17 +41,19 @@ function validEmail() {
   // Check if the '.' is not the last character
   if (dotIndex === email.length - 1) emailFeedback.innerHTML = invalidEmail;
 
-  emailFeedback.innerHTML = '';
+  // emailFeedback.innerHTML = '';
 
   // eslint-disable-next-line consistent-return
-  return true;
+  validEmail = true;
 }
 
-function validPassword() {
+function validatePassword() {
+  password = document.loginForm.password.value.trim();
   const passwordRequired = 'The password is required';
   const shouldContainNumbersAndLetters =
     'The password should contain at least numbers and letters';
   const minPasswordLength = 'The password should contain at least 8 characters';
+  validPassword = false;
 
   // Check if the password field is empty
   if (password.length === 0) {
@@ -66,10 +73,10 @@ function validPassword() {
   }
 
   // Remove text from the feedback field
-  pwFeedback.innerHTML = '';
+  // pwFeedback.innerHTML = '';
 
   // eslint-disable-next-line consistent-return
-  return true;
+  validPassword = true;
 }
 
 async function loginUser(mail, pw) {
@@ -86,10 +93,22 @@ async function loginUser(mail, pw) {
 
   const userDetails = await userData.json();
 
+  const okayHTTPCode = 200;
+  if (userDetails.status !== okayHTTPCode) {
+    flashSection.innerHTML = userDetails.error;
+    return;
+  }
+
   localStorage.setItem('userInfo', userDetails);
+  window.location.href =
+    'https://blaise-shyaka.github.io/Politico/templates/html/user-view-parties';
 }
 
 signin.addEventListener('click', e => {
   e.preventDefault();
+  validateEmail();
+  validatePassword();
+  if (validEmail && validPassword) {
+    loginUser(email, password);
+  }
 });
-// Make a fetch request and persist the JWT

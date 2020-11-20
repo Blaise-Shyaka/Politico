@@ -104,7 +104,7 @@ input {
     width: 40%;
 }
 
-.feedback {
+.feedback, .flash-section {
     color: red;
     font-size: 0.8rem;
 }
