@@ -104,6 +104,11 @@ input {
     width: 40%;
 }
 
+.feedback {
+    color: red;
+    font-size: 0.8rem;
+}
+
 @media screen and (min-width: 500px) {
     .login-form {
         width: 55%;

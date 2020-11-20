@@ -312,3 +312,5 @@ createAccount.addEventListener('click', event => {
   event.preventDefault();
   validateAndSendData();
 });
+
+exports = sendFeedback;

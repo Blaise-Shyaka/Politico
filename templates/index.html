@@ -27,11 +27,13 @@
                 <hr><span>Or</span><hr>
                 <div class="login-form">
                     <h3>Sign in to Politico</h3>
-                    <form action="">
-                        <input type="text" placeholder="Email" required>
+                    <form action="" name="loginForm">
+                        <input type="text" placeholder="Email" name="email" required>
                         <br>
-                        <input type="password" placeholder="Password" required>
+                        <p class="feedback" id="email-feedback"></p>
+                        <input type="password" placeholder="Password" name="password" required>
                         <br>
+                        <p class="feedback" id="password-feedback"></p>
                         <input type="submit" value="Sign In" class="button" id="signin">
                     </form>
                     <a href="../templates/html/auth-reset-password.html">Forgot password?</a>
@@ -39,5 +41,6 @@
             </div>
         </div>
     </div>
+    <script src="./scripts/signin.js"></script>
 </body>
 </html>
